@@ -1,2 +1,2 @@
-# loss-of-control-study
+# loss-of-control
 Loss of Control 2026 study files
