@@ -98,7 +98,7 @@ var shuffledTrials = shuffleArray(allTrials);
 // INITIALISE JSPSYCH
 // -------------------------------------------------------
 
-var jsPsych = initJsPsych({
+var jsPsych = jsPsychModule.initJsPsych({
     on_finish: function() {
         // Data will be sent to JATOS - for now just show it
         jsPsych.data.displayData();
