@@ -142,11 +142,16 @@ var information_sheet = {
         '…and I agree to participate in this study.',
         '…but have decided I would rather not participate in this study.'
     ],
-    button_html: [
-        '<button class="trial-button" style="background-color: #4CAF50; color: white; border-color: #4CAF50;">%choice%</button>',
-        '<button class="trial-button" style="background-color: #e53935; color: white; border-color: #e53935;">%choice%</button>'
-    ],
-    data: { trial_type: 'information_sheet' }
+    data: { trial_type: 'information_sheet' },
+    on_load: function() {
+        var buttons = document.querySelectorAll('.trial-button');
+        buttons[0].style.setProperty('background-color', '#4CAF50', 'important');
+        buttons[0].style.setProperty('color', 'white', 'important');
+        buttons[0].style.setProperty('border-color', '#4CAF50', 'important');
+        buttons[1].style.setProperty('background-color', '#e53935', 'important');
+        buttons[1].style.setProperty('color', 'white', 'important');
+        buttons[1].style.setProperty('border-color', '#e53935', 'important');
+    }
 };
 timeline.push(information_sheet);
 
