@@ -270,7 +270,7 @@ timeline.push(if_declined);
                                 '<p style="font-size:16px; text-align:center;">Please type what you think you saw in the box below:</p>' +
                                 '<textarea id="response-text" rows="3" style="width:60%; font-size:15px; padding:8px;"></textarea><br>' +
                                 '<button id="btn-next" class="trial-button" style="display:block; margin:12px auto;">Please take me to the next trial.</button>';
-                            document.querySelector(".jspsych-html-button-response-stimulus").appendChild(responseDiv);
+                            document.getElementById("jspsych-html-button-response-stimulus").appendChild(responseDiv);
 
                             document.getElementById("btn-next").addEventListener("click", function() {
                                 _response_text = document.getElementById("response-text").value;
