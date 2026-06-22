@@ -122,6 +122,28 @@ var if_declined = {
     }
 };
 timeline.push(if_declined);
+
+var bNFC = {
+  type: jsPsychSurveyLikert,
+  questions: [
+    {prompt: "I don't like situations that are uncertain.", name: "nfc1", labels: ["1<br>Completely disagree", "2", "3", "4", "5", "6<br>Completely agree"], required: true},
+    {prompt: "I dislike questions which could be answered in many different ways.", name: "nfc2", labels: ["1<br>Completely disagree", "2", "3", "4", "5", "6<br>Completely agree"], required: true},
+    {prompt: "I find that a well ordered life with regular hours suits my temperament.", name: "nfc3", labels: ["1<br>Completely disagree", "2", "3", "4", "5", "6<br>Completely agree"], required: true},
+    {prompt: "I feel uncomfortable when I don't understand the reason why an event occurred in my life.", name: "nfc4", labels: ["1<br>Completely disagree", "2", "3", "4", "5", "6<br>Completely agree"], required: true},
+    {prompt: "I feel irritated when one person disagrees with what everyone else in a group believes.", name: "nfc5", labels: ["1<br>Completely disagree", "2", "3", "4", "5", "6<br>Completely agree"], required: true},
+    {prompt: "I don't like to go into a situation without knowing what I can expect from it.", name: "nfc6", labels: ["1<br>Completely disagree", "2", "3", "4", "5", "6<br>Completely agree"], required: true},
+    {prompt: "When I have made a decision, I feel relieved.", name: "nfc7", labels: ["1<br>Completely disagree", "2", "3", "4", "5", "6<br>Completely agree"], required: true},
+    {prompt: "When I am confronted with a problem, I'm dying to reach a solution very quickly.", name: "nfc8", labels: ["1<br>Completely disagree", "2", "3", "4", "5", "6<br>Completely agree"], required: true},
+    {prompt: "I would quickly become impatient and irritated if I would not find a solution to a problem immediately.", name: "nfc9", labels: ["1<br>Completely disagree", "2", "3", "4", "5", "6<br>Completely agree"], required: true},
+    {prompt: "I don't like to be with people who are capable of unexpected actions.", name: "nfc10", labels: ["1<br>Completely disagree", "2", "3", "4", "5", "6<br>Completely agree"], required: true},
+    {prompt: "I dislike it when a person's statement could mean many different things.", name: "nfc11", labels: ["1<br>Completely disagree", "2", "3", "4", "5", "6<br>Completely agree"], required: true},
+    {prompt: "I find that establishing a consistent routine enables me to enjoy life more.", name: "nfc12", labels: ["1<br>Completely disagree", "2", "3", "4", "5", "6<br>Completely agree"], required: true},
+    {prompt: "I enjoy having a clear and structured mode of life.", name: "nfc13", labels: ["1<br>Completely disagree", "2", "3", "4", "5", "6<br>Completely agree"], required: true},
+    {prompt: "I do not usually consult many different opinions before forming my own view.", name: "nfc14", labels: ["1<br>Completely disagree", "2", "3", "4", "5", "6<br>Completely agree"], required: true},
+    {prompt: "I dislike unpredictable situations.", name: "nfc15", labels: ["1<br>Completely disagree", "2", "3", "4", "5", "6<br>Completely agree"], required: true}
+  ],
+  preamble: "<h2>About You</h2><p>Please indicate how much you agree or disagree with each of the following statements.</p>"
+};
     
         // -------------------------------------------------------
         // SNOWY PICTURES SETUP
@@ -251,7 +273,8 @@ if (currentLevel < 1) {
                 };
 
                 timeline.push(snowy_trial);
-
+                timeline.push(bNFC);
+                
             })(shuffledTrials[t], t + 1);
         }
 
@@ -259,6 +282,6 @@ if (currentLevel < 1) {
         // RUN THE STUDY
         // -------------------------------------------------------
         jsPsych.run(timeline);
-           
+       
 </script>
 </html> 
