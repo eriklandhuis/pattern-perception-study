@@ -143,31 +143,33 @@ var bNFC = {
         {prompt: "I dislike unpredictable situations.", labels: ["1<br>Completely disagree","2","3","4","5","6<br>Completely agree"], required: false}
     ],
     randomize_question_order: false,
-    on_load: function() {
-        var warningShown = false;
-        var submitBtn = document.querySelector('#jspsych-survey-likert-next');
-        submitBtn.addEventListener('click', function(e) {
-            var inputs = document.querySelectorAll('.jspsych-survey-likert-statement');
-            var unanswered = 0;
-            inputs.forEach(function(row) {
-                var radios = row.querySelectorAll('input[type="radio"]');
-                var answered = Array.from(radios).some(function(r) { return r.checked; });
-                if (!answered) unanswered++;
-            });
-            if (unanswered > 0 && !warningShown) {
-                e.stopImmediatePropagation();
-                warningShown = true;
-                var warning = document.getElementById('bnfc-warning');
-                if (!warning) {
-                    var msg = document.createElement('p');
-                    msg.id = 'bnfc-warning';
-                    msg.style = 'color: #c0392b; font-size: 15px; text-align: center; margin-top: 10px;';
-                    msg.textContent = 'You have left ' + unanswered + ' item(s) unanswered. If you would like to answer them, please do so now. Otherwise, click Submit again to continue.';
-                    submitBtn.parentNode.insertBefore(msg, submitBtn);
-                }
+on_load: function() {
+    var warningShown = false;
+    var submitBtn = document.querySelector('button#jspsych-survey-likert-next');
+    if (!submitBtn) return;
+
+    submitBtn.addEventListener('click', function(e) {
+        var unanswered = 0;
+        document.querySelectorAll('table.jspsych-survey-likert-opts').forEach(function(table) {
+            if (!table.querySelector('input[type="radio"]:checked')) unanswered++;
+        });
+
+        if (unanswered > 0 && !warningShown) {
+            e.stopImmediatePropagation();
+            warningShown = true;
+            var existing = document.getElementById('bnfc-warning');
+            if (!existing) {
+                var msg = document.createElement('p');
+                msg.id = 'bnfc-warning';
+                msg.style.color = '#c0392b';
+                msg.style.textAlign = 'center';
+                msg.style.marginTop = '10px';
+                msg.textContent = 'You have left ' + unanswered + ' item(s) unanswered. Click Submit again to continue, or scroll up to answer them.';
+                submitBtn.parentNode.insertBefore(msg, submitBtn);
             }
-        }, true);
-    }
+        }
+    }, true);
+}
 };
     
         // -------------------------------------------------------
