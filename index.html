@@ -125,6 +125,7 @@ timeline.push(if_declined);
 
 var bNFC = {
     type: jsPsychSurveyLikert,
+    preamble: '<p>Please answer all of the following items. If you do not wish to answer a particular item, you may leave it blank and still proceed.</p>',
     questions: [
         {prompt: "I don't like situations that are uncertain.", labels: ["1<br>Completely disagree","2","3","4","5","6<br>Completely agree"], required: false},
         {prompt: "I dislike questions which could be answered in many different ways.", labels: ["1<br>Completely disagree","2","3","4","5","6<br>Completely agree"], required: false},
@@ -142,34 +143,7 @@ var bNFC = {
         {prompt: "I do not usually consult many different opinions before forming my own view.", labels: ["1<br>Completely disagree","2","3","4","5","6<br>Completely agree"], required: false},
         {prompt: "I dislike unpredictable situations.", labels: ["1<br>Completely disagree","2","3","4","5","6<br>Completely agree"], required: false}
     ],
-    randomize_question_order: false,
-on_load: function() {
-    var warningShown = false;
-    var submitBtn = document.querySelector('button#jspsych-survey-likert-next');
-    if (!submitBtn) return;
-
-    submitBtn.addEventListener('click', function(e) {
-        var unanswered = 0;
-        document.querySelectorAll('table.jspsych-survey-likert-opts').forEach(function(table) {
-            if (!table.querySelector('input[type="radio"]:checked')) unanswered++;
-        });
-
-        if (unanswered > 0 && !warningShown) {
-            e.stopImmediatePropagation();
-            warningShown = true;
-            var existing = document.getElementById('bnfc-warning');
-            if (!existing) {
-                var msg = document.createElement('p');
-                msg.id = 'bnfc-warning';
-                msg.style.color = '#c0392b';
-                msg.style.textAlign = 'center';
-                msg.style.marginTop = '10px';
-                msg.textContent = 'You have left ' + unanswered + ' item(s) unanswered. Click Submit again to continue, or scroll up to answer them.';
-                submitBtn.parentNode.insertBefore(msg, submitBtn);
-            }
-        }
-    }, true);
-}
+    randomize_question_order: false
 };
     
         // -------------------------------------------------------
