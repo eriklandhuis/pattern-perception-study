@@ -125,23 +125,23 @@ timeline.push(if_declined);
 
 var bNFC = {
     type: jsPsychSurveyLikert,
-    preamble: '<p>Please answer all of the following items. If you do not wish to answer a particular item, you may leave it blank and still proceed.</p>',
+    preamble: '<p>Please rate your agreement with each of the following statements.</p>',
     questions: [
-        {prompt: "I don't like situations that are uncertain.", labels: ["1<br>Completely disagree","2","3","4","5","6<br>Completely agree"], required: false},
-        {prompt: "I dislike questions which could be answered in many different ways.", labels: ["1<br>Completely disagree","2","3","4","5","6<br>Completely agree"], required: false},
-        {prompt: "I find that a well ordered life with regular hours suits my temperament.", labels: ["1<br>Completely disagree","2","3","4","5","6<br>Completely agree"], required: false},
-        {prompt: "I feel uncomfortable when I don't understand the reason why an event occurred in my life.", labels: ["1<br>Completely disagree","2","3","4","5","6<br>Completely agree"], required: false},
-        {prompt: "I feel irritated when one person disagrees with what everyone else in a group believes.", labels: ["1<br>Completely disagree","2","3","4","5","6<br>Completely agree"], required: false},
-        {prompt: "I don't like to go into a situation without knowing what I can expect from it.", labels: ["1<br>Completely disagree","2","3","4","5","6<br>Completely agree"], required: false},
-        {prompt: "When I have made a decision, I feel relieved.", labels: ["1<br>Completely disagree","2","3","4","5","6<br>Completely agree"], required: false},
-        {prompt: "When I am confronted with a problem, I'm dying to reach a solution very quickly.", labels: ["1<br>Completely disagree","2","3","4","5","6<br>Completely agree"], required: false},
-        {prompt: "I would quickly become impatient and irritated if I would not find a solution to a problem immediately.", labels: ["1<br>Completely disagree","2","3","4","5","6<br>Completely agree"], required: false},
-        {prompt: "I don't like to be with people who are capable of unexpected actions.", labels: ["1<br>Completely disagree","2","3","4","5","6<br>Completely agree"], required: false},
-        {prompt: "I dislike it when a person's statement could mean many different things.", labels: ["1<br>Completely disagree","2","3","4","5","6<br>Completely agree"], required: false},
-        {prompt: "I find that establishing a consistent routine enables me to enjoy life more.", labels: ["1<br>Completely disagree","2","3","4","5","6<br>Completely agree"], required: false},
-        {prompt: "I enjoy having a clear and structured mode of life.", labels: ["1<br>Completely disagree","2","3","4","5","6<br>Completely agree"], required: false},
-        {prompt: "I do not usually consult many different opinions before forming my own view.", labels: ["1<br>Completely disagree","2","3","4","5","6<br>Completely agree"], required: false},
-        {prompt: "I dislike unpredictable situations.", labels: ["1<br>Completely disagree","2","3","4","5","6<br>Completely agree"], required: false}
+        {prompt: "I don't like situations that are uncertain.", labels: ["1<br>Completely disagree","2","3","4","5","6<br>Completely agree"], required: true},
+        {prompt: "I dislike questions which could be answered in many different ways.", labels: ["1<br>Completely disagree","2","3","4","5","6<br>Completely agree"], required: true},
+        {prompt: "I find that a well ordered life with regular hours suits my temperament.", labels: ["1<br>Completely disagree","2","3","4","5","6<br>Completely agree"], required: true},
+        {prompt: "I feel uncomfortable when I don't understand the reason why an event occurred in my life.", labels: ["1<br>Completely disagree","2","3","4","5","6<br>Completely agree"], required: true},
+        {prompt: "I feel irritated when one person disagrees with what everyone else in a group believes.", labels: ["1<br>Completely disagree","2","3","4","5","6<br>Completely agree"], required: true},
+        {prompt: "I don't like to go into a situation without knowing what I can expect from it.", labels: ["1<br>Completely disagree","2","3","4","5","6<br>Completely agree"], required: true},
+        {prompt: "When I have made a decision, I feel relieved.", labels: ["1<br>Completely disagree","2","3","4","5","6<br>Completely agree"], required: true},
+        {prompt: "When I am confronted with a problem, I'm dying to reach a solution very quickly.", labels: ["1<br>Completely disagree","2","3","4","5","6<br>Completely agree"], required: true},
+        {prompt: "I would quickly become impatient and irritated if I would not find a solution to a problem immediately.", labels: ["1<br>Completely disagree","2","3","4","5","6<br>Completely agree"], required: true},
+        {prompt: "I don't like to be with people who are capable of unexpected actions.", labels: ["1<br>Completely disagree","2","3","4","5","6<br>Completely agree"], required: true},
+        {prompt: "I dislike it when a person's statement could mean many different things.", labels: ["1<br>Completely disagree","2","3","4","5","6<br>Completely agree"], required: true},
+        {prompt: "I find that establishing a consistent routine enables me to enjoy life more.", labels: ["1<br>Completely disagree","2","3","4","5","6<br>Completely agree"], required: true},
+        {prompt: "I enjoy having a clear and structured mode of life.", labels: ["1<br>Completely disagree","2","3","4","5","6<br>Completely agree"], required: true},
+        {prompt: "I do not usually consult many different opinions before forming my own view.", labels: ["1<br>Completely disagree","2","3","4","5","6<br>Completely agree"], required: true},
+        {prompt: "I dislike unpredictable situations.", labels: ["1<br>Completely disagree","2","3","4","5","6<br>Completely agree"], required: true}
     ],
     randomize_question_order: false
 };
