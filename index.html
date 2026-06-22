@@ -50,49 +50,6 @@
 <body></body>
 <script>
 
-// -------------------------------------------------------
-// STUDY CONFIGURATION
-// -------------------------------------------------------
-
-var baseURL = "https://eriklandhuis.github.io/loss-of-control/images";
-
-// Define all 20 trials (10 hit, 10 fa)
-var allTrials = [
-    {condition: "hit", set: "01"},
-    {condition: "hit", set: "02"},
-    {condition: "hit", set: "03"},
-    {condition: "hit", set: "04"},
-    {condition: "hit", set: "05"},
-    {condition: "hit", set: "06"},
-    {condition: "hit", set: "07"},
-    {condition: "hit", set: "08"},
-    {condition: "hit", set: "09"},
-    {condition: "hit", set: "10"},
-    {condition: "fa", set: "01"},
-    {condition: "fa", set: "02"},
-    {condition: "fa", set: "03"},
-    {condition: "fa", set: "04"},
-    {condition: "fa", set: "05"},
-    {condition: "fa", set: "06"},
-    {condition: "fa", set: "07"},
-    {condition: "fa", set: "08"},
-    {condition: "fa", set: "09"},
-    {condition: "fa", set: "10"}
-];
-
-// Shuffle the trials randomly
-function shuffleArray(array) {
-    var arr = array.slice();
-    for (var i = arr.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
-    }
-    return arr;
-}
-
-var shuffledTrials = shuffleArray(allTrials);
 
 // -------------------------------------------------------
 // INITIALISE JSPSYCH
@@ -195,7 +152,7 @@ timeline.push(if_declined);
                       '<li><b>"I think I know what is shown"</b> if you think you can identify what is in the image</li>' +
                       '</ul>' +
                       '<p>When you think you know what is shown, you will be asked to type what you saw.</p>' +
-                      '<p>There are 20 image sets in total.</p>',
+                      '<p>There are 10 image sets in total.</p>',
             choices: ['Start Image Task']
         };
         timeline.push(snowy_instructions);
@@ -218,7 +175,7 @@ timeline.push(if_declined);
                     choices: ["I can't see anything. Please show me the next image.", "I think I know what is shown in the image."],
                     button_html: '<button class="trial-button">%choice%</button>',
                     on_load: function() {
-                        var currentLevel = 20;
+                        var currentLevel = 10;
                         var clickCount = 0;
 
                         function showImage(level) {
@@ -226,8 +183,8 @@ timeline.push(if_declined);
                             var imageURL = baseURL + "/" + trialInfo.condition + "/" +
                                 trialInfo.condition + "_st" + trialInfo.set + "_lvl" + lvl + ".png";
                             document.getElementById("trial-image").src = imageURL;
-                            var viewed = 21 - level;
-                            document.getElementById("level-counter").innerHTML = "Image " + viewed + " of 20";
+                            var viewed = 11 - level;
+                            document.getElementById("level-counter").innerHTML = "Image " + viewed + " of 10";
                         }
 
                         var buttons = document.querySelectorAll(".trial-button");
@@ -240,7 +197,7 @@ timeline.push(if_declined);
 
                             if (currentLevel < 1) {
                                 // Participant viewed all 20 images without identifying
-                                _threshold = 20;
+                                _threshold = 10;
                                 _response_text = '';
                                 _identified = false;
                                 document.getElementById("trial-instruction").innerHTML =
@@ -284,7 +241,7 @@ timeline.push(if_declined);
                         data.trial_number  = trialNumber;
                         data.condition     = trialInfo.condition;
                         data.stimulus_set  = trialInfo.set;
-                        data.threshold     = _threshold !== null ? _threshold : 20;
+                        data.threshold     = _threshold !== null ? _threshold : 10;
                         data.identified    = _identified;
                         data.response_text = _response_text;
                     }
