@@ -195,23 +195,26 @@ timeline.push(if_declined);
                             clickCount++;
                             currentLevel--;
 
-                            if (currentLevel < 1) {
-                                // Participant viewed all 20 images without identifying
-                                _threshold = 10;
-                                _response_text = '';
-                                _identified = false;
-                                document.getElementById("trial-instruction").innerHTML =
-                                    "<p>You have viewed all the images for this set.</p>" +
-                                    "<p>Moving on to the next one...</p>";
-                                buttons[0].style.display = "none";
-                                buttons[1].style.display = "none";
-                                setTimeout(function() {
-                                    jsPsych.finishTrial();
-                                }, 1500);
-                            } else {
-                                showImage(currentLevel);
-                            }
-                        }, true);
+if (currentLevel < 1) {
+    _threshold = 10;
+    _identified = false;
+    buttons[0].style.display = "none";
+    buttons[1].style.display = "none";
+    var responseDiv = document.createElement("div");
+    responseDiv.innerHTML =
+        '<p style="font-size:16px; text-align:center;">You have viewed all the images for this set.</p>' +
+        '<p style="font-size:16px; text-align:center;">Please type what you think you saw in the box below. Guess if necessary.</p>' +
+        '<textarea id="response-text" rows="3" style="width:60%; font-size:15px; padding:8px;"></textarea><br>' +
+        '<button id="btn-next" class="trial-button" style="display:block; margin:12px auto;">Please take me to the next trial.</button>';
+    document.getElementById("jspsych-html-button-response-stimulus").appendChild(responseDiv);
+    document.getElementById("btn-next").addEventListener("click", function() {
+        _response_text = document.getElementById("response-text").value;
+        jsPsych.finishTrial();
+    });
+} else {
+    showImage(currentLevel);
+}
+}, true);
                         
                         // Button 2: I think I know what is shown
                         buttons[1].addEventListener("click", function(e) {
