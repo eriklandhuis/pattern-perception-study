@@ -186,6 +186,36 @@ var demographics = {
     `,
     button_label: 'Next'
 };
+
+var debrief = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: `
+        <div style="max-width: 750px; margin: 0 auto; text-align: left; line-height: 1.6;">
+            <h2 style="text-align: center;">Thank You for Participating</h2>
+
+            <p>We greatly appreciate the time, effort, and concentration that you devoted to completing these tasks. Some aspects of the study were intentionally designed to be challenging, and it is completely normal to have found parts of the experience difficult, frustrating, or uncertain.</p>
+
+            <p>If at any point you felt that you were not performing as well as you would have liked, please be reassured that this should not be interpreted as a reflection of your intelligence, abilities, or personal skills. Many people experience similar feelings when completing these types of tasks, and finding them difficult is entirely expected.</p>
+
+            <p>Because data collection is still ongoing, we are unable to provide a full explanation of the study at this stage. A complete explanation of the study's purpose and design will be made available once all participants have completed the research. To obtain a copy of the complete explanation of the study's purpose and design, as well as a summary of the findings, please use the following link:</p>
+
+            <p style="text-align: center;"><a href="https://aut.au1.qualtrics.com/jfe/form/SV_38GDIaTOEEkDX70" target="_blank">https://aut.au1.qualtrics.com/jfe/form/SV_38GDIaTOEEkDX70</a></p>
+
+            <p>Alternatively, you may request a copy of the results by emailing Dr Erik Landhuis at <a href="mailto:erik.landhuis@aut.ac.nz">erik.landhuis@aut.ac.nz</a>.</p>
+
+            <p>We strongly encourage you to obtain a copy of the full debrief and study findings once they become available — we think you will find them interesting.</p>
+
+            <p>The above information is also available in the Participant Information Sheet, which can be downloaded here: [Insert copy of approved Participant Information Sheet here]</p>
+
+            <p>Finally, we would like to thank you for participating in this research. The time and effort you have given to this project are sincerely appreciated.</p>
+
+            <p><em>Lucy, Jay, and Erik</em></p>
+        </div>
+    `,
+    choices: ['Finish'],
+    button_html: '<button class="jspsych-btn" style="font-size: 16px; padding: 10px 30px; margin-top: 20px;">%choice%</button>'
+};
+    
         // -------------------------------------------------------
         // SNOWY PICTURES SETUP
         // -------------------------------------------------------
@@ -320,6 +350,7 @@ if (currentLevel < 1) {
     
                 timeline.push(bNFC);
                 timeline.push(demographics);
+                timeline.push(debrief);
     
         // -------------------------------------------------------
         // RUN THE STUDY
