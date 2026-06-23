@@ -84,6 +84,101 @@ var welcome = {
 
 timeline.push(welcome);
 
+// ============================
+// RAVEN'S PROGRESSIVE MATRICES
+// ============================
+
+var rpm_condition = jsPsych.randomization.sampleWithoutReplacement([1, 2, 3], 1)[0];
+
+var rpm_cnd2_feedback = ['negative','negative','positive','negative','negative','negative','negative','negative','negative','negative'];
+
+// --- PRACTICE TRIAL ---
+var rpm_practice = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: `
+        <div style="max-width: 800px; margin: 0 auto; text-align: left; line-height: 1.6;">
+            <p>This is a concept identification task.</p>
+            <p>In the trials that follow, you will be presented with a series of nine squares, as shown below. Eight of those nine squares will contain some information, but the last (bottom right) square will contain a question mark.</p>
+            <p>Below the main image you will see four more squares labelled A, B, C, & D.</p>
+            <p>Based on the information in the first 8 squares, select the option that you think is the correct image that belongs in the last (bottom right) square.</p>
+            <p>As a practice trial, which of the four options at the bottom (labelled A, B, C, & D), do you think is the one that should go in the bottom right square with the question mark?<br>
+            <em>(Note that this is a relatively easy one — the ones that follow will be more difficult).</em></p>
+            <div style="text-align: center;">
+                <img src="images/ravens/rpm_practice_trial.png" style="max-width: 100%; margin: 20px 0;">
+            </div>
+        </div>
+    `,
+    choices: ['A', 'B', 'C', 'D'],
+    data: { trial_type_custom: 'rpm_practice' },
+    on_finish: function(data) {
+        data.response_label = ['A', 'B', 'C', 'D'][data.response];
+    }
+};
+
+var rpm_practice_feedback = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: `
+        <div style="max-width: 750px; margin: 0 auto; text-align: center; line-height: 1.6;">
+            <p>Great! You've got it.</p>
+            <p>Let's start the first real trial.</p>
+        </div>
+    `,
+    choices: ['Please take me to the first trial']
+};
+
+timeline.push(rpm_practice);
+timeline.push(rpm_practice_feedback);
+
+// --- MAIN TRIALS ---
+for (var i = 1; i <= 10; i++) {
+    var trl = String(i).padStart(2, '0');
+    var cnd = String(rpm_condition).padStart(2, '0');
+    var rpm_img = 'images/ravens/rpm_cnd' + cnd + '_trl' + trl + '.png';
+
+    var rpm_trial = {
+        type: jsPsychHtmlButtonResponse,
+        stimulus: `
+            <div style="max-width: 800px; margin: 0 auto; text-align: left; line-height: 1.6;">
+                <p>Below you see a 3 x 3 matrix of nine squares.</p>
+                <p>Eight of those nine squares contain some information, but the last (bottom right) square contains a question mark.</p>
+                <p>Below the 3 x 3 matrix of nine squares you will see four more squares labelled A, B, C, & D.</p>
+                <p>Based on the information in the first 8 squares, please select the option that you think is the correct image that belongs in the last (bottom right) square with the question mark.</p>
+                <div style="text-align: center;">
+                    <img src="${rpm_img}" style="max-width: 100%; margin: 20px 0;">
+                </div>
+            </div>
+        `,
+        choices: ['A', 'B', 'C', 'D'],
+        data: {
+            trial_type_custom: 'rpm_trial',
+            rpm_condition: rpm_condition,
+            trial_number: i
+        },
+        on_finish: function(data) {
+            data.response_label = ['A', 'B', 'C', 'D'][data.response];
+        }
+    };
+    timeline.push(rpm_trial);
+
+    var feedback_text = '';
+    if (rpm_condition === 1) {
+        feedback_text = 'Well done, that was the correct answer.';
+    } else if (rpm_condition === 2) {
+        feedback_text = rpm_cnd2_feedback[i - 1] === 'positive'
+            ? 'Well done, that was the correct answer.'
+            : 'Unfortunately, that is not the correct answer.';
+    }
+
+    var rpm_next_page = {
+        type: jsPsychHtmlButtonResponse,
+        stimulus: feedback_text
+            ? `<div style="max-width: 750px; margin: 0 auto; text-align: center; line-height: 1.6;"><p>${feedback_text}</p></div>`
+            : `<div style="max-width: 750px; margin: 0 auto;"></div>`,
+        choices: ['Please take me to the next trial']
+    };
+    timeline.push(rpm_next_page);
+}
+    
 // -------------------------------------------------------
 // INFORMATION SHEET
 // -------------------------------------------------------
