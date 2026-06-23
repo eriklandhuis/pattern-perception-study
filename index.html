@@ -247,7 +247,6 @@ var transition_to_bnfc = {
     `,
     choices: ['Continue'],
 };
-timeline.push(transition_to_bnfc);
     
 var bNFC = {
     type: jsPsychSurveyLikert,
@@ -282,7 +281,6 @@ var transition_to_demographics = {
     `,
     choices: ['Continue'],
 };
-timeline.push(transition_to_demographics);
     
 var demographics = {
     type: jsPsychSurveyHtmlForm,
@@ -499,9 +497,11 @@ if (currentLevel < 1) {
             })(shuffledTrials[t], t + 1);
         }
     
-                timeline.push(bNFC);
-                timeline.push(demographics);
-                timeline.push(debrief);
+        timeline.push(transition_to_bnfc);
+        timeline.push(bNFC);
+        timeline.push(transition_to_demographics);
+        timeline.push(demographics);
+        timeline.push(debrief);
     
         // -------------------------------------------------------
         // RUN THE STUDY
