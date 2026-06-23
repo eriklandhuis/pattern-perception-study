@@ -220,21 +220,32 @@ for (var i = 1; i <= 10; i++) {
     };
     timeline.push(rpm_trial);
 
+var feedback_icon = '';
     var feedback_text = '';
+
     if (rpm_condition === 1) {
+        feedback_icon = '<p style="font-size: 5em; color: green; margin: 10px 0;">✓</p>';
         feedback_text = 'Well done, that was the correct answer.';
     } else if (rpm_condition === 2) {
-        feedback_text = rpm_cnd2_feedback[i - 1] === 'positive'
-            ? 'Well done, that was the correct answer.'
-            : 'Unfortunately, that is not the correct answer.';
+        if (rpm_cnd2_feedback[i - 1] === 'positive') {
+            feedback_icon = '<p style="font-size: 5em; color: green; margin: 10px 0;">✓</p>';
+            feedback_text = 'Well done, that was the correct answer.';
+        } else {
+            feedback_icon = '<p style="font-size: 5em; color: red; margin: 10px 0;">✗</p>';
+            feedback_text = 'Unfortunately, that is not the correct answer.';
+        }
     }
 
     var rpm_next_page = {
         type: jsPsychHtmlButtonResponse,
-        stimulus: feedback_text
-            ? `<div style="max-width: 750px; margin: 0 auto; text-align: center; line-height: 1.6;"><p>${feedback_text}</p></div>`
+        stimulus: (feedback_text || feedback_icon)
+            ? `<div style="max-width: 750px; margin: 0 auto; text-align: center; line-height: 1.8;">
+                   ${feedback_icon}
+                   <p style="font-size: 1.4em;">${feedback_text}</p>
+               </div>`
             : `<div style="max-width: 750px; margin: 0 auto;"></div>`,
-        choices: ['Please take me to the next trial']
+        choices: ['Please take me to the next trial'],
+        button_html: '<button class="jspsych-btn" style="font-size: 1.2em; padding: 14px 36px; margin-top: 20px;">%choice%</button>'
     };
     timeline.push(rpm_next_page);
 }
