@@ -84,12 +84,57 @@ var welcome = {
 
 timeline.push(welcome);
 
+
+    
+// -------------------------------------------------------
+// INFORMATION SHEET
+// -------------------------------------------------------
+var information_sheet = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: '<h2>Study Information</h2>' +
+              '<p><strong>[PLACEHOLDER: Study title and institution]</strong></p>' +
+              '<p>[PLACEHOLDER: Brief description of the study purpose and what participation involves.]</p>' +
+              '<p>[PLACEHOLDER: Information about data storage, anonymity, and confidentiality.]</p>' +
+              '<p>[PLACEHOLDER: Information about voluntary participation and the right to withdraw.]</p>' +
+              '<p>[PLACEHOLDER: Contact details for the research team.]</p>' +
+              '<hr>' +
+              '<p><strong>I have understood what participation in this study involves…</strong></p>',
+    choices: [
+        '…and I agree to participate in this study.',
+        '…but have decided I would rather not participate in this study.'
+    ],
+    data: { trial_type: 'information_sheet' }
+};
+timeline.push(information_sheet);
+
+// If participant declines, show thank-you and end the study
+var declined_screen = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: '<h2>Thank you</h2>' +
+              '<p>Thank you for your time. You may now close this window.</p>',
+    choices: ['Close'],
+    on_finish: function() {
+        jsPsych.endExperiment();
+    }
+};
+
+var if_declined = {
+    timeline: [declined_screen],
+    conditional_function: function() {
+        var last = jsPsych.data.get().last(1).values()[0];
+        return last.response === 1; // Button index 1 = decline
+    }
+};
+timeline.push(if_declined);
+    
 // ============================
 // RAVEN'S PROGRESSIVE MATRICES
 // ============================
 
+// Randomly assign condition (1, 2, or 3)
 var rpm_condition = jsPsych.randomization.sampleWithoutReplacement([1, 2, 3], 1)[0];
 
+// Condition 2 feedback: which trials get positive feedback (trial 3 only)
 var rpm_cnd2_feedback = ['negative','negative','positive','negative','negative','negative','negative','negative','negative','negative'];
 
 // --- PRACTICE TRIAL ---
@@ -115,6 +160,7 @@ var rpm_practice = {
     }
 };
 
+// Practice feedback
 var rpm_practice_feedback = {
     type: jsPsychHtmlButtonResponse,
     stimulus: `
@@ -179,47 +225,6 @@ for (var i = 1; i <= 10; i++) {
     timeline.push(rpm_next_page);
 }
     
-// -------------------------------------------------------
-// INFORMATION SHEET
-// -------------------------------------------------------
-var information_sheet = {
-    type: jsPsychHtmlButtonResponse,
-    stimulus: '<h2>Study Information</h2>' +
-              '<p><strong>[PLACEHOLDER: Study title and institution]</strong></p>' +
-              '<p>[PLACEHOLDER: Brief description of the study purpose and what participation involves.]</p>' +
-              '<p>[PLACEHOLDER: Information about data storage, anonymity, and confidentiality.]</p>' +
-              '<p>[PLACEHOLDER: Information about voluntary participation and the right to withdraw.]</p>' +
-              '<p>[PLACEHOLDER: Contact details for the research team.]</p>' +
-              '<hr>' +
-              '<p><strong>I have understood what participation in this study involves…</strong></p>',
-    choices: [
-        '…and I agree to participate in this study.',
-        '…but have decided I would rather not participate in this study.'
-    ],
-    data: { trial_type: 'information_sheet' }
-};
-timeline.push(information_sheet);
-
-// If participant declines, show thank-you and end the study
-var declined_screen = {
-    type: jsPsychHtmlButtonResponse,
-    stimulus: '<h2>Thank you</h2>' +
-              '<p>Thank you for your time. You may now close this window.</p>',
-    choices: ['Close'],
-    on_finish: function() {
-        jsPsych.endExperiment();
-    }
-};
-
-var if_declined = {
-    timeline: [declined_screen],
-    conditional_function: function() {
-        var last = jsPsych.data.get().last(1).values()[0];
-        return last.response === 1; // Button index 1 = decline
-    }
-};
-timeline.push(if_declined);
-
 var bNFC = {
     type: jsPsychSurveyLikert,
     preamble: '<p>Please rate your agreement with each of the following statements.</p>',
