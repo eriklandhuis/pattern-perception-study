@@ -7,6 +7,8 @@
 <script src="https://cdn.jsdelivr.net/npm/@jspsych/plugin-survey-text@1.1.3/dist/index.browser.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@jspsych/plugin-survey-likert@1.1.3/dist/index.browser.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@jspsych/plugin-html-keyboard-response@1.1.3/dist/index.browser.js"></script>
+<script src="https://unpkg.com/@jspsych/plugin-survey-html-form@1.0.3/dist/index.browser.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@jspsych/plugin-survey-multi-choice@1.1.3/dist/index.browser.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jspsych@7.3.4/css/jspsych.css">
     <style>
         .jspsych-content {
@@ -50,49 +52,6 @@
 <body></body>
 <script>
 
-// -------------------------------------------------------
-// STUDY CONFIGURATION
-// -------------------------------------------------------
-
-var baseURL = "https://eriklandhuis.github.io/loss-of-control/images";
-
-// Define all 20 trials (10 hit, 10 fa)
-var allTrials = [
-    {condition: "hit", set: "01"},
-    {condition: "hit", set: "02"},
-    {condition: "hit", set: "03"},
-    {condition: "hit", set: "04"},
-    {condition: "hit", set: "05"},
-    {condition: "hit", set: "06"},
-    {condition: "hit", set: "07"},
-    {condition: "hit", set: "08"},
-    {condition: "hit", set: "09"},
-    {condition: "hit", set: "10"},
-    {condition: "fa", set: "01"},
-    {condition: "fa", set: "02"},
-    {condition: "fa", set: "03"},
-    {condition: "fa", set: "04"},
-    {condition: "fa", set: "05"},
-    {condition: "fa", set: "06"},
-    {condition: "fa", set: "07"},
-    {condition: "fa", set: "08"},
-    {condition: "fa", set: "09"},
-    {condition: "fa", set: "10"}
-];
-
-// Shuffle the trials randomly
-function shuffleArray(array) {
-    var arr = array.slice();
-    for (var i = arr.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
-    }
-    return arr;
-}
-
-var shuffledTrials = shuffleArray(allTrials);
 
 // -------------------------------------------------------
 // INITIALISE JSPSYCH
@@ -165,11 +124,104 @@ var if_declined = {
     }
 };
 timeline.push(if_declined);
+
+var bNFC = {
+    type: jsPsychSurveyLikert,
+    preamble: '<p>Please rate your agreement with each of the following statements.</p>',
+    questions: [
+        {prompt: "I don't like situations that are uncertain.", labels: ["Completely disagree","Disagree","Disagree a little","Agree a little","Agree","Completely agree"], required: true},
+        {prompt: "I dislike questions which could be answered in many different ways.", labels: ["Completely disagree","Disagree","Disagree a little","Agree a little","Agree","Completely agree"], required: true},
+        {prompt: "I find that a well ordered life with regular hours suits my temperament.", labels: ["Completely disagree","Disagree","Disagree a little","Agree a little","Agree","Completely agree"], required: true},
+        {prompt: "I feel uncomfortable when I don't understand the reason why an event occurred in my life.", labels: ["Completely disagree","Disagree","Disagree a little","Agree a little","Agree","Completely agree"], required: true},
+        {prompt: "I feel irritated when one person disagrees with what everyone else in a group believes.", labels: ["Completely disagree","Disagree","Disagree a little","Agree a little","Agree","Completely agree"], required: true},
+        {prompt: "I don't like to go into a situation without knowing what I can expect from it.", labels: ["Completely disagree","Disagree","Disagree a little","Agree a little","Agree","Completely agree"], required: true},
+        {prompt: "When I have made a decision, I feel relieved.", labels: ["Completely disagree","Disagree","Disagree a little","Agree a little","Agree","Completely agree"], required: true},
+        {prompt: "When I am confronted with a problem, I'm dying to reach a solution very quickly.", labels: ["Completely disagree","Disagree","Disagree a little","Agree a little","Agree","Completely agree"], required: true},
+        {prompt: "I would quickly become impatient and irritated if I would not find a solution to a problem immediately.", labels: ["Completely disagree","Disagree","Disagree a little","Agree a little","Agree","Completely agree"], required: true},
+        {prompt: "I don't like to be with people who are capable of unexpected actions.", labels: ["Completely disagree","Disagree","Disagree a little","Agree a little","Agree","Completely agree"], required: true},
+        {prompt: "I dislike it when a person's statement could mean many different things.", labels: ["Completely disagree","Disagree","Disagree a little","Agree a little","Agree","Completely agree"], required: true},
+        {prompt: "I find that establishing a consistent routine enables me to enjoy life more.", labels: ["Completely disagree","Disagree","Disagree a little","Agree a little","Agree","Completely agree"], required: true},
+        {prompt: "I enjoy having a clear and structured mode of life.", labels: ["Completely disagree","Disagree","Disagree a little","Agree a little","Agree","Completely agree"], required: true},
+        {prompt: "I do not usually consult many different opinions before forming my own view.", labels: ["Completely disagree","Disagree","Disagree a little","Agree a little","Agree","Completely agree"], required: true},
+        {prompt: "I dislike unpredictable situations.", labels: ["Completely disagree","Disagree","Disagree a little","Agree a little","Agree","Completely agree"], required: true}
+    ],
+    randomize_question_order: false
+};
+
+var demographics = {
+    type: jsPsychSurveyHtmlForm,
+    preamble: '<p style="font-size:18px;"><strong>Background Information</strong></p><p>Please answer the following questions.</p>',
+    html: `
+        <div style="margin-bottom:30px;">
+            <p><strong>Are you:</strong></p>
+            <label><input type="radio" name="gender" value="Male" required onchange="document.getElementById('gender_other_box').style.display='none'"> Male</label><br><br>
+            <label><input type="radio" name="gender" value="Female" onchange="document.getElementById('gender_other_box').style.display='none'"> Female</label><br><br>
+            <label><input type="radio" name="gender" value="Other" onchange="document.getElementById('gender_other_box').style.display='block'"> Other</label><br>
+            <div id="gender_other_box" style="display:none; margin-left:20px; margin-top:5px;">
+                <input type="text" name="gender_other" placeholder="Please describe...">
+            </div><br>
+            <label><input type="radio" name="gender" value="Prefer not to say" onchange="document.getElementById('gender_other_box').style.display='none'"> Prefer not to say</label>
+        </div>
+
+        <div style="margin-bottom:30px;">
+            <p><strong>What year were you born?</strong></p>
+            <select name="birth_year" required>
+                <option value="">-- Select a year --</option>
+                ${Array.from({length: 86}, (_, i) => 2011 - i).map(y => `<option value="${y}">${y}</option>`).join('')}
+            </select>
+        </div>
+
+        <div style="margin-bottom:30px;">
+            <p><strong>What is your ethnicity?</strong></p>
+            <p style="font-size:14px; color:#666;">Select all that apply.</p>
+            <label><input type="checkbox" name="ethnicity_nze" value="New Zealand European"> New Zealand European</label><br><br>
+            <label><input type="checkbox" name="ethnicity_maori" value="Māori"> Māori</label><br><br>
+            <label><input type="checkbox" name="ethnicity_pasifika" value="Pasifika"> Pasifika</label><br><br>
+            <label><input type="checkbox" name="ethnicity_asian" value="Asian"> Asian</label><br><br>
+            <label><input type="checkbox" name="ethnicity_other_european" value="Other European"> Other European</label><br><br>
+            <label><input type="checkbox" name="ethnicity_other" value="Other" onchange="document.getElementById('ethnicity_other_box').style.display=this.checked?'block':'none'"> Other</label><br>
+            <div id="ethnicity_other_box" style="display:none; margin-left:20px; margin-top:5px;">
+                <input type="text" name="ethnicity_other_text" placeholder="Please describe...">
+            </div>
+        </div>
+    `,
+    button_label: 'Next'
+};
+
+var debrief = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: `
+        <div style="max-width: 750px; margin: 0 auto; text-align: left; line-height: 1.6;">
+            <h2 style="text-align: center;">Thank You for Participating</h2>
+
+            <p>We greatly appreciate the time, effort, and concentration that you devoted to completing these tasks. Some aspects of the study were intentionally designed to be challenging, and it is completely normal to have found parts of the experience difficult, frustrating, or uncertain.</p>
+
+            <p>If at any point you felt that you were not performing as well as you would have liked, please be reassured that this should not be interpreted as a reflection of your intelligence, abilities, or personal skills. Many people experience similar feelings when completing these types of tasks, and finding them difficult is entirely expected.</p>
+
+            <p>Because data collection is still ongoing, we are unable to provide a full explanation of the study at this stage. A complete explanation of the study's purpose and design will be made available once all participants have completed the research. To obtain a copy of the complete explanation of the study's purpose and design, as well as a summary of the findings, please use the following link:</p>
+
+            <p style="text-align: center;"><a href="https://aut.au1.qualtrics.com/jfe/form/SV_38GDIaTOEEkDX70" target="_blank">https://aut.au1.qualtrics.com/jfe/form/SV_38GDIaTOEEkDX70</a></p>
+
+            <p>Alternatively, you may request a copy of the results by emailing Dr Erik Landhuis at <a href="mailto:erik.landhuis@aut.ac.nz">erik.landhuis@aut.ac.nz</a>.</p>
+
+            <p>We strongly encourage you to obtain a copy of the full debrief and study findings once they become available — we think you will find them interesting.</p>
+
+            <p>The above information is also available in the Participant Information Sheet, which can be downloaded here: [Insert copy of approved Participant Information Sheet here]</p>
+
+            <p>Finally, we would like to thank you for participating in this research. The time and effort you have given to this project are sincerely appreciated.</p>
+
+            <p><em>Lucy, Jay, and Erik</em></p>
+        </div>
+    `,
+    choices: ['Finish'],
+    button_html: '<button class="jspsych-btn" style="font-size: 16px; padding: 10px 30px; margin-top: 20px;">%choice%</button>'
+};
     
         // -------------------------------------------------------
         // SNOWY PICTURES SETUP
         // -------------------------------------------------------
         var baseURL = 'https://eriklandhuis.github.io/pattern-perception-study/images';
+        var rpmURL = 'https://eriklandhuis.github.io/pattern-perception-study/images/rpm';
 
         // Build all 20 trials (10 hit, 10 fa)
         var allTrials = [];
@@ -213,12 +265,12 @@ timeline.push(if_declined);
                 var snowy_trial = {
                     type: jsPsychHtmlButtonResponse,
                     stimulus: '<p id="trial-instruction" style="font-size:16px;">Please look carefully at the image below. Select the option that best describes what you see.</p>' +
-                              '<img id="trial-image" class="trial-image" src="' + baseURL + '/' + trialInfo.condition + '/' + trialInfo.condition + '_st' + trialInfo.set + '_lvl20.png" />' +
-                              '<p id="level-counter" class="level-counter">Image 1 of 20</p>',
+                              '<img id="trial-image" class="trial-image" src="' + baseURL + '/' + trialInfo.condition + '/' + trialInfo.condition + '_st' + trialInfo.set + '_lvl10.png" />' +
+                              '<p id="level-counter" class="level-counter">Image 1 of 10</p>',
                     choices: ["I can't see anything. Please show me the next image.", "I think I know what is shown in the image."],
                     button_html: '<button class="trial-button">%choice%</button>',
                     on_load: function() {
-                        var currentLevel = 20;
+                        var currentLevel = 10;
                         var clickCount = 0;
 
                         function showImage(level) {
@@ -226,8 +278,8 @@ timeline.push(if_declined);
                             var imageURL = baseURL + "/" + trialInfo.condition + "/" +
                                 trialInfo.condition + "_st" + trialInfo.set + "_lvl" + lvl + ".png";
                             document.getElementById("trial-image").src = imageURL;
-                            var viewed = 21 - level;
-                            document.getElementById("level-counter").innerHTML = "Image " + viewed + " of 20";
+                            var viewed = 11 - level;
+                            document.getElementById("level-counter").innerHTML = "Image " + viewed + " of 10";
                         }
 
                         var buttons = document.querySelectorAll(".trial-button");
@@ -238,23 +290,26 @@ timeline.push(if_declined);
                             clickCount++;
                             currentLevel--;
 
-                            if (currentLevel < 1) {
-                                // Participant viewed all 20 images without identifying
-                                _threshold = 20;
-                                _response_text = '';
-                                _identified = false;
-                                document.getElementById("trial-instruction").innerHTML =
-                                    "<p>You have viewed all the images for this set.</p>" +
-                                    "<p>Moving on to the next one...</p>";
-                                buttons[0].style.display = "none";
-                                buttons[1].style.display = "none";
-                                setTimeout(function() {
-                                    jsPsych.finishTrial();
-                                }, 1500);
-                            } else {
-                                showImage(currentLevel);
-                            }
-                        }, true);
+if (currentLevel < 1) {
+    _threshold = 10;
+    _identified = false;
+    buttons[0].style.display = "none";
+    buttons[1].style.display = "none";
+    var responseDiv = document.createElement("div");
+    responseDiv.innerHTML =
+        '<p style="font-size:16px; text-align:center;">You have viewed all the images for this set.</p>' +
+        '<p style="font-size:16px; text-align:center;">Please type what you think you saw in the box below. Guess if necessary.</p>' +
+        '<textarea id="response-text" rows="3" style="width:60%; font-size:15px; padding:8px;"></textarea><br>' +
+        '<button id="btn-next" class="trial-button" style="display:block; margin:12px auto;">Please take me to the next trial.</button>';
+    document.getElementById("jspsych-html-button-response-stimulus").appendChild(responseDiv);
+    document.getElementById("btn-next").addEventListener("click", function() {
+        _response_text = document.getElementById("response-text").value;
+        jsPsych.finishTrial();
+    });
+} else {
+    showImage(currentLevel);
+}
+}, true);
                         
                         // Button 2: I think I know what is shown
                         buttons[1].addEventListener("click", function(e) {
@@ -284,21 +339,25 @@ timeline.push(if_declined);
                         data.trial_number  = trialNumber;
                         data.condition     = trialInfo.condition;
                         data.stimulus_set  = trialInfo.set;
-                        data.threshold     = _threshold !== null ? _threshold : 20;
+                        data.threshold     = _threshold !== null ? _threshold : 10;
                         data.identified    = _identified;
                         data.response_text = _response_text;
                     }
                 };
 
                 timeline.push(snowy_trial);
-
+                
             })(shuffledTrials[t], t + 1);
         }
-
+    
+                timeline.push(bNFC);
+                timeline.push(demographics);
+                timeline.push(debrief);
+    
         // -------------------------------------------------------
         // RUN THE STUDY
         // -------------------------------------------------------
         jsPsych.run(timeline);
-           
+       
 </script>
 </html> 
