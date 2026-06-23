@@ -7,6 +7,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@jspsych/plugin-survey-text@1.1.3/dist/index.browser.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@jspsych/plugin-survey-likert@1.1.3/dist/index.browser.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@jspsych/plugin-html-keyboard-response@1.1.3/dist/index.browser.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@jspsych/plugin-survey-html-form@1.1.3/dist/index.browser.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jspsych@7.3.4/css/jspsych.css">
     <style>
         .jspsych-content {
@@ -145,7 +146,46 @@ var bNFC = {
     ],
     randomize_question_order: false
 };
-    
+
+var demographics = {
+    type: jsPsychSurveyHtmlForm,
+    preamble: '<p style="font-size:18px;"><strong>Background Information</strong></p><p>Please answer the following questions.</p>',
+    html: `
+        <div style="margin-bottom:30px;">
+            <p><strong>Are you:</strong></p>
+            <label><input type="radio" name="gender" value="Male" required onchange="document.getElementById('gender_other_box').style.display='none'"> Male</label><br><br>
+            <label><input type="radio" name="gender" value="Female" onchange="document.getElementById('gender_other_box').style.display='none'"> Female</label><br><br>
+            <label><input type="radio" name="gender" value="Other" onchange="document.getElementById('gender_other_box').style.display='block'"> Other</label><br>
+            <div id="gender_other_box" style="display:none; margin-left:20px; margin-top:5px;">
+                <input type="text" name="gender_other" placeholder="Please describe...">
+            </div><br>
+            <label><input type="radio" name="gender" value="Prefer not to say" onchange="document.getElementById('gender_other_box').style.display='none'"> Prefer not to say</label>
+        </div>
+
+        <div style="margin-bottom:30px;">
+            <p><strong>What year were you born?</strong></p>
+            <select name="birth_year" required>
+                <option value="">-- Select a year --</option>
+                ${Array.from({length: 86}, (_, i) => 2011 - i).map(y => `<option value="${y}">${y}</option>`).join('')}
+            </select>
+        </div>
+
+        <div style="margin-bottom:30px;">
+            <p><strong>What is your ethnicity?</strong></p>
+            <p style="font-size:14px; color:#666;">Select all that apply.</p>
+            <label><input type="checkbox" name="ethnicity_nze" value="New Zealand European"> New Zealand European</label><br><br>
+            <label><input type="checkbox" name="ethnicity_maori" value="Māori"> Māori</label><br><br>
+            <label><input type="checkbox" name="ethnicity_pasifika" value="Pasifika"> Pasifika</label><br><br>
+            <label><input type="checkbox" name="ethnicity_asian" value="Asian"> Asian</label><br><br>
+            <label><input type="checkbox" name="ethnicity_other_european" value="Other European"> Other European</label><br><br>
+            <label><input type="checkbox" name="ethnicity_other" value="Other" onchange="document.getElementById('ethnicity_other_box').style.display=this.checked?'block':'none'"> Other</label><br>
+            <div id="ethnicity_other_box" style="display:none; margin-left:20px; margin-top:5px;">
+                <input type="text" name="ethnicity_other_text" placeholder="Please describe...">
+            </div>
+        </div>
+    `,
+    button_label: 'Next'
+};
         // -------------------------------------------------------
         // SNOWY PICTURES SETUP
         // -------------------------------------------------------
@@ -279,6 +319,7 @@ if (currentLevel < 1) {
         }
     
                 timeline.push(bNFC);
+                timeline.push(demographics);
     
         // -------------------------------------------------------
         // RUN THE STUDY
