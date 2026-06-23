@@ -166,7 +166,7 @@ var rpm_practice = {
         </div>
     `,
     choices: ['A', 'B', 'C', 'D'],
-    button_html: '<button class="jspsych-btn" style="font-size: 1.4em; padding: 14px 36px; margin: 6px;">%choice%</button>',
+button_html: '<button class="jspsych-btn" style="font-size: 1.8em; padding: 18px 48px; margin: 8px;">%choice%</button>',
     data: { trial_type_custom: 'rpm_practice' },
     on_finish: function(data) {
         data.response_label = ['A', 'B', 'C', 'D'][data.response];
@@ -208,7 +208,7 @@ for (var i = 1; i <= 10; i++) {
             </div>
         `,
         choices: ['A', 'B', 'C', 'D'],
-        button_html: '<button class="jspsych-btn" style="font-size: 1.4em; padding: 14px 36px; margin: 6px;">%choice%</button>',
+    button_html: '<button class="jspsych-btn" style="font-size: 1.8em; padding: 18px 48px; margin: 8px;">%choice%</button>',
         data: {
             trial_type_custom: 'rpm_trial',
             rpm_condition: rpm_condition,
