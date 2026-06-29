@@ -417,21 +417,25 @@ var debrief = {
 };
 timeline.push(transition_to_snowy);
     
-    var snowy_instructions = {
-            type: jsPsychHtmlButtonResponse,
-            stimulus: '<h2>Image Task Instructions</h2>' +
-                      '<p>In this part of the study, you will be shown a series of images.</p>' +
-                      '<p>Each image will start off very unclear and gradually become clearer.</p>' +
-                      '<p>For each image, please select:</p>' +
-                      '<ul style="text-align:left;">' +
-                      '<li><b>"I can\'t see anything"</b> if you cannot make out what the image shows</li>' +
-                      '<li><b>"I think I know what is shown"</b> if you think you can identify what is in the image</li>' +
-                      '</ul>' +
-                      '<p>When you think you know what is shown, you will be asked to type what you saw.</p>' +
-                      '<p>There are 20 image sets in total.</p>',
-            choices: ['Start Image Task']
-        };
-        timeline.push(snowy_instructions);
+var snowy_instructions = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: '<h2>Degraded Image Task Instructions</h2>' +
+              '<p>In this part of the study, you will be shown a series of degraded (unclear) images.</p>' +
+              '<p>Each image will initially be highly degraded, and you may not be able to identify anything meaningful. Below each image, you will see two buttons:</p>' +
+              '<ul style="text-align:left;">' +
+              '<li><b>"I can\'t see anything, Please show me the next image"</b> – select this if you cannot identify what the image shows.</li>' +
+              '<li><b>"I think I can identify the image"</b> – select this as soon as you think you can identify what is shown in the image.</li>' +
+              '</ul>' +
+              '<p>If you select <b>"I can\'t see anything"</b>, a slightly less degraded version of the same image will be shown. If you still cannot identify anything meaningful, select <b>"I can\'t see anything"</b> again. With each click, the image will become progressively clearer.</p>' +
+              '<p>As soon as you think you know what the image shows, select <b>"I think I can identify the image"</b>. A text box will then appear with the instruction:</p>' +
+              '<p><i>"Please type what you think you saw in the box below."</i></p>' +
+              '<p>Type your answer into the text box.</p>' +
+              '<p>Your goal is to identify the hidden image using as few <b>"I can\'t see anything"</b> responses as possible.</p>' +
+              '<p>If you have not identified the image after 10 selections of <b>"I can\'t see anything"</b>, the text box will automatically appear. At this point, please type your best guess about what the image might show.</p>' +
+              '<p>There are 20 image sets in total.</p>',
+    choices: ['Start Image Task']
+};
+timeline.push(snowy_instructions);
         // -------------------------------------------------------
         // SNOWY PICTURES TRIALS
         // -------------------------------------------------------
