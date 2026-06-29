@@ -131,8 +131,13 @@ var transition_to_ravens = {
     type: jsPsychHtmlButtonResponse,
     stimulus: `
         <div style="max-width: 700px; margin: auto; font-size: 1.2em; line-height: 1.8;">
-            <h2>Part 1: Pattern Problems</h2>
-            <p>[Placeholder text — describe what participants are about to do in the Ravens task. E.g., "In this first part, you will be shown a series of pattern problems. For each one, please choose the answer you think is correct."]</p>
+            <h2>Part 1: Pattern Identification Task</h2>
+            <p>There are three parts to this study.</p>
+            <p>In this first part, you will be asked to solve a series of 10 pattern identification problems.</p>
+            <p>In each trials you will be presented with a series of nine squares.</p>
+            <p>Eight of those nine squares will contain some information, but the last (bottom right) square will contain a question mark.</p>
+            <p>Based on the information in the first 8 squares, your task is to figure out what should be in that final square, by choosing one of the 4 options underneath labelled A, B, C, & D.</p>
+            <p>Before you go on to do the proper trials, we will walk you through a practice trial</p>
         </div>
     `,
     choices: ['Continue'],
@@ -154,7 +159,6 @@ var rpm_practice = {
     type: jsPsychHtmlButtonResponse,
     stimulus: `
         <div style="max-width: 800px; margin: 0 auto; text-align: left; line-height: 1.6;">
-            <p>This is a concept identification task.</p>
             <p>In the trials that follow, you will be presented with a series of nine squares, as shown below. Eight of those nine squares will contain some information, but the last (bottom right) square will contain a question mark.</p>
             <p>Below the main image you will see four more squares labelled A, B, C, & D.</p>
             <p>Based on the information in the first 8 squares, select the option that you think is the correct image that belongs in the last (bottom right) square.</p>
