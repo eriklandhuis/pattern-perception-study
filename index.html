@@ -84,100 +84,7 @@ var welcome = {
 
 timeline.push(welcome);
 
-// ============================
-// RAVEN'S PROGRESSIVE MATRICES
-// ============================
 
-var rpm_condition = jsPsych.randomization.sampleWithoutReplacement([1, 2, 3], 1)[0];
-
-var rpm_cnd2_feedback = ['negative','negative','positive','negative','negative','negative','negative','negative','negative','negative'];
-
-// --- PRACTICE TRIAL ---
-var rpm_practice = {
-    type: jsPsychHtmlButtonResponse,
-    stimulus: `
-        <div style="max-width: 800px; margin: 0 auto; text-align: left; line-height: 1.6;">
-            <p>This is a concept identification task.</p>
-            <p>In the trials that follow, you will be presented with a series of nine squares, as shown below. Eight of those nine squares will contain some information, but the last (bottom right) square will contain a question mark.</p>
-            <p>Below the main image you will see four more squares labelled A, B, C, & D.</p>
-            <p>Based on the information in the first 8 squares, select the option that you think is the correct image that belongs in the last (bottom right) square.</p>
-            <p>As a practice trial, which of the four options at the bottom (labelled A, B, C, & D), do you think is the one that should go in the bottom right square with the question mark?<br>
-            <em>(Note that this is a relatively easy one — the ones that follow will be more difficult).</em></p>
-            <div style="text-align: center;">
-                <img src="images/ravens/rpm_practice_trial.png" style="max-width: 100%; margin: 20px 0;">
-            </div>
-        </div>
-    `,
-    choices: ['A', 'B', 'C', 'D'],
-    data: { trial_type_custom: 'rpm_practice' },
-    on_finish: function(data) {
-        data.response_label = ['A', 'B', 'C', 'D'][data.response];
-    }
-};
-
-var rpm_practice_feedback = {
-    type: jsPsychHtmlButtonResponse,
-    stimulus: `
-        <div style="max-width: 750px; margin: 0 auto; text-align: center; line-height: 1.6;">
-            <p>Great! You've got it.</p>
-            <p>Let's start the first real trial.</p>
-        </div>
-    `,
-    choices: ['Please take me to the first trial']
-};
-
-timeline.push(rpm_practice);
-timeline.push(rpm_practice_feedback);
-
-// --- MAIN TRIALS ---
-for (var i = 1; i <= 10; i++) {
-    var trl = String(i).padStart(2, '0');
-    var cnd = String(rpm_condition).padStart(2, '0');
-    var rpm_img = 'images/ravens/rpm_cnd' + cnd + '_trl' + trl + '.png';
-
-    var rpm_trial = {
-        type: jsPsychHtmlButtonResponse,
-        stimulus: `
-            <div style="max-width: 800px; margin: 0 auto; text-align: left; line-height: 1.6;">
-                <p>Below you see a 3 x 3 matrix of nine squares.</p>
-                <p>Eight of those nine squares contain some information, but the last (bottom right) square contains a question mark.</p>
-                <p>Below the 3 x 3 matrix of nine squares you will see four more squares labelled A, B, C, & D.</p>
-                <p>Based on the information in the first 8 squares, please select the option that you think is the correct image that belongs in the last (bottom right) square with the question mark.</p>
-                <div style="text-align: center;">
-                    <img src="${rpm_img}" style="max-width: 100%; margin: 20px 0;">
-                </div>
-            </div>
-        `,
-        choices: ['A', 'B', 'C', 'D'],
-        data: {
-            trial_type_custom: 'rpm_trial',
-            rpm_condition: rpm_condition,
-            trial_number: i
-        },
-        on_finish: function(data) {
-            data.response_label = ['A', 'B', 'C', 'D'][data.response];
-        }
-    };
-    timeline.push(rpm_trial);
-
-    var feedback_text = '';
-    if (rpm_condition === 1) {
-        feedback_text = 'Well done, that was the correct answer.';
-    } else if (rpm_condition === 2) {
-        feedback_text = rpm_cnd2_feedback[i - 1] === 'positive'
-            ? 'Well done, that was the correct answer.'
-            : 'Unfortunately, that is not the correct answer.';
-    }
-
-    var rpm_next_page = {
-        type: jsPsychHtmlButtonResponse,
-        stimulus: feedback_text
-            ? `<div style="max-width: 750px; margin: 0 auto; text-align: center; line-height: 1.6;"><p>${feedback_text}</p></div>`
-            : `<div style="max-width: 750px; margin: 0 auto;"></div>`,
-        choices: ['Please take me to the next trial']
-    };
-    timeline.push(rpm_next_page);
-}
     
 // -------------------------------------------------------
 // INFORMATION SHEET
@@ -220,6 +127,160 @@ var if_declined = {
 };
 timeline.push(if_declined);
 
+var transition_to_ravens = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: `
+        <div style="max-width: 700px; margin: auto; font-size: 1.2em; line-height: 1.8;">
+            <h2>Part 1: Pattern Identification Task</h2>
+            <p>There are three parts to this study.</p>
+            <p>In this first part, you will be asked to solve a series of 10 pattern identification problems.</p>
+            <p>In the trials that follow, you will be presented with a series of nine squares. Eight of those nine squares will contain some information, but the last (bottom right) square will contain a question mark.<br>
+               Below the main image you will see four more squares<br>
+               labelled A, B, C, & D.</p>
+            <p>Based on the information in the first 8 squares, you will be asked to select the option that you think belongs in the last (bottom right) square.</p>
+            <p>To help explain how to proceed, we would like to walk you through a practice trial.</p>
+            <p>Please click the "Continue" button if you are ready to begin the practice trial.</p>
+        </div>
+    `,
+    choices: ['Continue'],
+};
+timeline.push(transition_to_ravens);
+    
+// ============================
+// RAVEN'S PROGRESSIVE MATRICES
+// ============================
+
+// Randomly assign condition (1, 2, or 3)
+var rpm_condition = jsPsych.randomization.sampleWithoutReplacement([1, 2, 3], 1)[0];
+
+// Condition 2 feedback: which trials get positive feedback (trial 3 only)
+var rpm_cnd2_feedback = ['negative','negative','positive','negative','negative','negative','negative','negative','negative','negative'];
+
+// --- PRACTICE TRIAL ---
+var rpm_practice = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: `
+        <div style="max-width: 800px; margin: 0 auto; text-align: left; line-height: 1.6;">
+            <h2>Practice trial</h2>
+            <p>In the image below you see three shapes; a circle, a 5-sided pentagon, and 4-sided diamond.<br>
+               The colour of the shapes vary:<br>
+            <ul>
+               <li>In the top row you see a red pentagon, a green circle, and a blue diamond.</li>
+               <li>In the middle row you see a blue circle, a red diamond, and a green pentagon.</li>
+               <li>And in the bottom row there is a green diamond, a blue pentagon, and a question mark.</li>
+            </ul>
+            <p>So, the pattern is that each row and each column (that is, from top to bottom), should include one diamond, one circle, and one pentagon.<br>
+               And each row and each column should also include one of the three colours (i.e., red, green & blue).</p>
+            <p>From this we can work out that the missing symbol in the last square with the question mark should be the red circle, because 'red' and 'circle' are missing from row 3 and column 3.<br>
+               Therefore option B is the correct response.</p> 
+            <em>(Note that this is a relatively easy one — the ones that follow will be more difficult).</em></p>
+            <p><strong>Please click any one of the four buttons labelled A, B, C or D to continue</strong></p>
+            <div style="text-align: center;">
+                <img src="images/ravens/rpm_practice_trial.png" style="max-width: 60%; margin: 20px 0;">
+            </div>
+        </div>
+    `,
+    choices: ['A', 'B', 'C', 'D'],
+button_html: '<button class="jspsych-btn" style="font-size: 1.8em; padding: 18px 48px; margin: 8px;">%choice%</button>',
+    data: { trial_type_custom: 'rpm_practice' },
+    on_finish: function(data) {
+        data.response_label = ['A', 'B', 'C', 'D'][data.response];
+    }
+};
+
+// Practice feedback
+var rpm_practice_feedback = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: `
+        <div style="max-width: 750px; margin: 0 auto; text-align: center; line-height: 1.6;">
+            <p>Great! You've got it.</p>
+            <p>Let's start the first real trial.</p>
+        </div>
+    `,
+    choices: ['Please take me to the first trial']
+};
+
+timeline.push(rpm_practice);
+timeline.push(rpm_practice_feedback);
+
+// --- MAIN TRIALS ---
+for (var i = 1; i <= 10; i++) {
+    var trl = String(i).padStart(2, '0');
+    var cnd = String(rpm_condition).padStart(2, '0');
+    var rpm_img = 'images/ravens/rpm_cnd' + cnd + '_trl' + trl + '.png';
+
+    var rpm_trial = {
+        type: jsPsychHtmlButtonResponse,
+        stimulus: `
+            <div style="max-width: 800px; margin: 0 auto; text-align: left; line-height: 1.6;">
+                <p>Which of the four squares labelled A, B, C, or D do you think belongs in the square with the question mark?</p>
+                <p>Please click one of the 4 buttons labelled A, B, C, & D for your answer</p>
+                <div style="text-align: center;">
+                    <img src="${rpm_img}" style="max-width: 60%; margin: 20px 0;">
+                </div>
+            </div>
+        `,
+        choices: ['A', 'B', 'C', 'D'],
+    button_html: '<button class="jspsych-btn" style="font-size: 1.8em; padding: 18px 48px; margin: 8px;">%choice%</button>',
+        data: {
+            trial_type_custom: 'rpm_trial',
+            rpm_condition: rpm_condition,
+            trial_number: i
+        },
+        on_finish: function(data) {
+            data.response_label = ['A', 'B', 'C', 'D'][data.response];
+        }
+    };
+    timeline.push(rpm_trial);
+
+var feedback_icon = '';
+    var feedback_text = '';
+
+    if (rpm_condition === 1) {
+        feedback_icon = '<p style="font-size: 5em; color: green; margin: 10px 0;">✓</p>';
+        feedback_text = 'Well done, that was the correct answer.';
+    } else if (rpm_condition === 2) {
+        if (rpm_cnd2_feedback[i - 1] === 'positive') {
+            feedback_icon = '<p style="font-size: 5em; color: green; margin: 10px 0;">✓</p>';
+            feedback_text = 'Well done, that was the correct answer.';
+        } else {
+            feedback_icon = '<p style="font-size: 5em; color: red; margin: 10px 0;">✗</p>';
+            feedback_text = 'Unfortunately, that is not the correct answer.';
+        }
+    }
+
+    var rpm_next_page = {
+        type: jsPsychHtmlButtonResponse,
+        stimulus: (feedback_text || feedback_icon)
+            ? `<div style="max-width: 750px; margin: 0 auto; text-align: center; line-height: 1.8;">
+                   ${feedback_icon}
+                   <p style="font-size: 1.4em;">${feedback_text}</p>
+               </div>`
+            : `<div style="max-width: 750px; margin: 0 auto;"></div>`,
+        choices: ['Please take me to the next trial'],
+        button_html: '<button class="jspsych-btn" style="font-size: 1.2em; padding: 14px 36px; margin-top: 20px;">%choice%</button>'
+    };
+    timeline.push(rpm_next_page);
+}
+
+var transition_to_bnfc = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: `
+        <div style="max-width: 700px; margin: auto; font-size: 1.2em; line-height: 1.8;">
+            <h2>Part 3: Short Questionnaire</h2>
+            <p>Congatulations, you've completed the degraded image recognition task.<br>
+               We will now move on to the last part of the study.<br>
+               On the next page you will see a series of 15 short statements.<br>
+               Please tell us how much you disagree or agree with each statement<br>
+               with "<b>Completely disagree</b>" on the far left-hand-side<br>
+               and "<b>Completely agree</b>" on the far right-hand-side</p>
+            <p>There are no 'right' or 'wrong' answers.<br>
+               Please tell us what you honestly think.</p>
+        </div>
+    `,
+    choices: ['Continue'],
+};
+    
 var bNFC = {
     type: jsPsychSurveyLikert,
     preamble: '<p>Please rate your agreement with each of the following statements.</p>',
@@ -243,6 +304,17 @@ var bNFC = {
     randomize_question_order: false
 };
 
+var transition_to_demographics = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: `
+        <div style="max-width: 700px; margin: auto; font-size: 1.2em; line-height: 1.8;">
+            <h2>Part 4: About You</h2>
+            <p>[Placeholder text — introduce the demographics section. E.g., "Almost done! We just have a few questions about you. This information helps us understand our sample."]</p>
+        </div>
+    `,
+    choices: ['Continue'],
+};
+    
 var demographics = {
     type: jsPsychSurveyHtmlForm,
     preamble: '<p style="font-size:18px;"><strong>Background Information</strong></p><p>Please answer the following questions.</p>',
@@ -278,6 +350,14 @@ var demographics = {
             <div id="ethnicity_other_box" style="display:none; margin-left:20px; margin-top:5px;">
                 <input type="text" name="ethnicity_other_text" placeholder="Please describe...">
             </div>
+        </div>
+        <div style="margin-bottom:30px;">
+            <p><strong>Please tell us what kind of device you used to complete this study.</strong></p>
+            <label><input type="radio" name="device" value="Smartphone" required> Smartphone</label><br><br>
+            <label><input type="radio" name="device" value="iPad or other tablet"> iPad or other tablet</label><br><br>
+            <label><input type="radio" name="device" value="Laptop computer"> Laptop computer</label><br><br>
+            <label><input type="radio" name="device" value="Desktop computer"> Desktop computer</label><br><br>
+            <label><input type="radio" name="device" value="Other"> Other</label>
         </div>
     `,
     button_label: 'Next'
@@ -331,21 +411,38 @@ var debrief = {
         // -------------------------------------------------------
         // SNOWY PICTURES INSTRUCTIONS
         // -------------------------------------------------------
-        var snowy_instructions = {
-            type: jsPsychHtmlButtonResponse,
-            stimulus: '<h2>Image Task Instructions</h2>' +
-                      '<p>In this part of the study, you will be shown a series of images.</p>' +
-                      '<p>Each image will start off very unclear and gradually become clearer.</p>' +
-                      '<p>For each image, please select:</p>' +
-                      '<ul style="text-align:left;">' +
-                      '<li><b>"I can\'t see anything"</b> if you cannot make out what the image shows</li>' +
-                      '<li><b>"I think I know what is shown"</b> if you think you can identify what is in the image</li>' +
-                      '</ul>' +
-                      '<p>When you think you know what is shown, you will be asked to type what you saw.</p>' +
-                      '<p>There are 20 image sets in total.</p>',
-            choices: ['Start Image Task']
-        };
-        timeline.push(snowy_instructions);
+
+    var transition_to_snowy = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: `
+        <div style="max-width: 700px; margin: auto; font-size: 1.2em; line-height: 1.8;">
+            <h2>Part 2: Image Recognition</h2>
+            <p>[Placeholder text — introduce the Snowy Pictures task. E.g., "In this next part, you will be shown a series of images that start out blurry. Your task is to identify what is in the image as it becomes clearer."]</p>
+        </div>
+    `,
+    choices: ['Continue'],
+};
+timeline.push(transition_to_snowy);
+    
+var snowy_instructions = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: '<h2>Degraded Image Recognition Task</h2>' +
+              '<p>In this part of the study, you will be shown a series of degraded (unclear) images.</p>' +
+              '<p>Each image will initially be highly degraded, and you may not be able to identify anything meaningful. Below each image, you will see two buttons:</p>' +
+              '<ul style="text-align:left;">' +
+              '<li><b>"I can\'t see anything, Please show me the next image"</b> – select this if you cannot identify what the image shows.</li>' +
+              '<li><b>"I think I can identify the image"</b> – select this as soon as you think you can identify what is shown in the image.</li>' +
+              '</ul>' +
+              '<p>If you select <b>"I can\'t see anything"</b>, a slightly less degraded version of the same image will be shown. If you still cannot identify anything meaningful, select <b>"I can\'t see anything"</b> again. With each click, the image will become progressively clearer.</p>' +
+              '<p>As soon as you think you know what the image shows, select <b>"I think I can identify the image"</b>. A text box will then appear with the instruction:</p>' +
+              '<p><i>"Please type what you think you saw in the box below."</i></p>' +
+              '<p>Type your answer into the text box.</p>' +
+              '<p>Your goal is to identify the hidden image using as few <b>"I can\'t see anything"</b> responses as possible.</p>' +
+              '<p>If you have not identified the image after 10 selections of <b>"I can\'t see anything"</b>, the text box will automatically appear. At this point, please type your best guess about what the image might show.</p>' +
+              '<p>There are 20 image sets in total.</p>',
+    choices: ['Start Image Task']
+};
+timeline.push(snowy_instructions);
         // -------------------------------------------------------
         // SNOWY PICTURES TRIALS
         // -------------------------------------------------------
@@ -445,9 +542,11 @@ if (currentLevel < 1) {
             })(shuffledTrials[t], t + 1);
         }
     
-                timeline.push(bNFC);
-                timeline.push(demographics);
-                timeline.push(debrief);
+        timeline.push(transition_to_bnfc);
+        timeline.push(bNFC);
+        timeline.push(transition_to_demographics);
+        timeline.push(demographics);
+        timeline.push(debrief);
     
         // -------------------------------------------------------
         // RUN THE STUDY
