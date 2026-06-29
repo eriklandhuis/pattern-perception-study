@@ -417,26 +417,17 @@ var debrief = {
 };
 timeline.push(transition_to_snowy);
     
-var snowy_instructions = {
+    var snowy_instructions = {
             type: jsPsychHtmlButtonResponse,
-            stimulus: '<h2>Degraded Image Task Instructions</h2>' +
-                      '<p>In this part of the study, you will be shown a series of degraded (unclear) images.<br>' +
-                      'Each image will start off very degraded (unclear), and it is unlikely that you will detect anything meaningful.<br>' +
-                      'Below the image you will see two buttons, labelled:</p>' +
+            stimulus: '<h2>Image Task Instructions</h2>' +
+                      '<p>In this part of the study, you will be shown a series of images.</p>' +
+                      '<p>Each image will start off very unclear and gradually become clearer.</p>' +
+                      '<p>For each image, please select:</p>' +
                       '<ul style="text-align:left;">' +
                       '<li><b>"I can\'t see anything"</b> if you cannot make out what the image shows</li>' +
                       '<li><b>"I think I know what is shown"</b> if you think you can identify what is in the image</li>' +
                       '</ul>' +
-                      '<p>If you can't see anything meaningful in the image, select the <b>"I can\'t see anything"</b> option.<br>' +
-                      'this will load the next image, which is a slightly less degraded version of the first image.<br>' +
-                      'If you still can't see anything meaningful, select the <b>"I can\'t see anything"</b> option again.<br>' +
-                      'As you continue to click the <b>"I can\'t see anything"</b> button, something meaningful should start to appear.</p>' +
-                      '<p>As soon as you think you know what is shown, click the <b>"I think I know what is shown"</b> button.</p>' +
-                      '<p>When you click the <b>"I think I know what is shown"</b> button, the words "Please type what you think you saw in the box below" and a textbox will appear.<br>' +
-                      'In the textbox, type what you think you saw</p>' +
-                      '<p>The aim of this task is to try and indentify the hidden image in as few clicks of the <b>"I can\'t see anything"</b> button as possible.<br>' +
-                      'If, after 10 clicks of the <b>"I can\'t see anything"</b> button you still haven't identified what was hidden in the image, the words "Please type what you think you saw in the box below" and a textbox will appear.<br>' +
-                      'In the textbox, have a guess at what you think might be hidden</p>' +
+                      '<p>When you think you know what is shown, you will be asked to type what you saw.</p>' +
                       '<p>There are 20 image sets in total.</p>',
             choices: ['Start Image Task']
         };
