@@ -271,7 +271,7 @@ var feedback_icon = '';
 var transition_to_bnfc = {
     type: jsPsychHtmlButtonResponse,
     stimulus: `
-        <div style="max-width: 700px; margin: auto; font-size: 1.2em; line-height: 1.8;">
+        <div style="max-width: 800px; margin: 0 auto; text-align: left; line-height: 1.6;">
             <h2>Part 3: Short Questionnaire</h2>
             <p>Congatulations, you've completed the degraded image recognition task.<br>
                We will now move on to the last part of the study.<br>
@@ -312,7 +312,7 @@ var bNFC = {
 var transition_to_demographics = {
     type: jsPsychHtmlButtonResponse,
     stimulus: `
-        <div style="max-width: 700px; margin: auto; font-size: 1.2em; line-height: 1.8;">
+        <div style="max-width: 800px; margin: 0 auto; text-align: left; line-height: 1.6;">
             <h2>Part 4: About You</h2>
             <p>[Placeholder text — introduce the demographics section. E.g., "Almost done! We just have a few questions about you. This information helps us understand our sample."]</p>
         </div>
@@ -420,9 +420,10 @@ var debrief = {
     var transition_to_snowy = {
     type: jsPsychHtmlButtonResponse,
     stimulus: `
-        <div style="max-width: 700px; margin: auto; font-size: 1.2em; line-height: 1.8;">
+        <div style="max-width: 800px; margin: 0 auto; text-align: left; line-height: 1.6;">
             <h2>Part 2: Image Recognition</h2>
-            <p>[Placeholder text — introduce the Snowy Pictures task. E.g., "In this next part, you will be shown a series of images that start out blurry. Your task is to identify what is in the image as it becomes clearer."]</p>
+            <p>In this next part, your task is to identify what is hiddenb is the pixilated images.</p>
+            <p>Please click "Continue" to begin this next task.</p>
         </div>
     `,
     choices: ['Continue'],
@@ -432,8 +433,8 @@ timeline.push(transition_to_snowy);
 var snowy_instructions = {
     type: jsPsychHtmlButtonResponse,
     stimulus: '<h2>Degraded Image Recognition Task</h2>' +
-              '<p>In this part of the study, you will be shown a series of degraded (unclear) images.</p>' +
-              '<p>Each image will initially be highly degraded, and you may not be able to identify anything meaningful. Below each image, you will see two buttons:</p>' +
+              '<p>In this part of the study, you will be shown a series of pixilated images.</p>' +
+              '<p>Each image will initially be very pixilated, and you may not be able to see anything meaningful. Below each image, you will see two buttons:</p>' +
               '<ul style="text-align:left;">' +
               '<li><b>"I can\'t see anything, Please show me the next image"</b> – select this if you cannot identify what the image shows.</li>' +
               '<li><b>"I think I can identify the image"</b> – select this as soon as you think you can identify what is shown in the image.</li>' +
