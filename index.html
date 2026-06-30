@@ -131,15 +131,15 @@ var transition_to_ravens = {
     type: jsPsychHtmlButtonResponse,
     stimulus: `
         <div style="max-width: 700px; margin: auto; font-size: 1.2em; line-height: 1.8;">
-            <h2>Part 1: Pattern Identification Task</h2>
-            <p>There are three parts to this study.</p>
-            <p>In this first part, you will be asked to solve a series of 10 pattern identification problems.</p>
-            <p>In the trials that follow, you will be presented with a series of nine squares. Eight of those nine squares will contain some information, but the last (bottom right) square will contain a question mark.<br>
-               Below the main image you will see four more squares<br>
-               labelled A, B, C, & D.</p>
-            <p>Based on the information in the first 8 squares, you will be asked to select the option that you think belongs in the last (bottom right) square.</p>
-            <p>To help explain how to proceed, we would like to walk you through a practice trial.</p>
-            <p>Please click the "Continue" button if you are ready to begin the practice trial.</p>
+            <h2>Study Overview</h2>
+            <p>There are four parts to this study.<br>
+            <ul>
+               <li>Pattern identification - 10 trials that will take about 3-7 minutes to complete.</li>
+               <li>Image recognition - 10 trials that will take about 3-7 minutes to complete.</li>
+               <li>Brief questionnaire - 15 questions that will take about 2-3 minutes to complete</li>
+               <li>About you - 4 questions asking about basic demographics.</li>
+            </ul>
+            <p>Please click the "Continue" button if you are ready to begin Part 1.</p>
         </div>
     `,
     choices: ['Continue'],
@@ -161,15 +161,17 @@ var rpm_practice = {
     type: jsPsychHtmlButtonResponse,
     stimulus: `
         <div style="max-width: 800px; margin: 0 auto; text-align: left; line-height: 1.6;">
-            <h2>Practice trial</h2>
-            <p>In the image below you see three shapes; a circle, a 5-sided pentagon, and 4-sided diamond.<br>
-               The colour of the shapes vary:<br>
+            <h2>Part 1: Pattern identification</h2>
+            <p>In this first part, you will be asked to solve 10 pattern identification problems.<br>
+            <p>Before you start, let's explain the task with an example.</p>
+            <p>In the image below you see three shapes - circles, a 5-sided pentagons, and 4-sided diamonds.<br>
+               The colour of the shapes vary - red, green, or blue.<br>
             <ul>
                <li>In the top row you see a red pentagon, a green circle, and a blue diamond.</li>
                <li>In the middle row you see a blue circle, a red diamond, and a green pentagon.</li>
-               <li>And in the bottom row there is a green diamond, a blue pentagon, and a question mark.</li>
+               <li>And in the bottom row you see a green diamond, a blue pentagon, and a question mark.</li>
             </ul>
-            <p>So, the pattern is that each row and each column (that is, from top to bottom), should include one diamond, one circle, and one pentagon.<br>
+            <p>The pattern is that each row and each column should include one of each shape (i.e., one diamond, one circle, and one pentagon).<br>
                And each row and each column should also include one of the three colours (i.e., red, green & blue).</p>
             <p>From this we can work out that the missing symbol in the last square with the question mark should be the red circle, because 'red' and 'circle' are missing from row 3 and column 3.<br>
                Therefore option B is the correct response.</p> 
