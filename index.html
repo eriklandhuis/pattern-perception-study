@@ -154,7 +154,7 @@ timeline.push(transition_to_ravens);
 var rpm_condition = jsPsych.randomization.sampleWithoutReplacement([1, 2, 3], 1)[0];
 
 // Condition 2 feedback: which trials get positive feedback (trial 3 only)
-var rpm_cnd2_feedback = ['negative','negative','positive','negative','negative','negative','negative','negative','negative','negative'];
+var rpm_cnd2_feedback = ['negative','negative','positive','negative','positive','negative','negative','negative','negative','negative'];
 
 // --- PRACTICE TRIAL ---
 var rpm_practice = {
@@ -193,8 +193,7 @@ var rpm_practice_feedback = {
     type: jsPsychHtmlButtonResponse,
     stimulus: `
         <div style="max-width: 750px; margin: 0 auto; text-align: center; line-height: 1.6;">
-            <p>Great! You've got it.</p>
-            <p>Let's start the first real trial.</p>
+           <p>Let's start the first real trial.</p>
         </div>
     `,
     choices: ['Please take me to the first trial']
