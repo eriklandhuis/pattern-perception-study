@@ -85,7 +85,7 @@ var welcome = {
               '<p>Thank you for taking the time to consider participating in this study.</p>' +
               '<p>Participation will take approximately 10-15 minutes of your time.</p>' +
               '<p>Please click the button below to read the participation Information Sheet.</p>',
-    choices: ['Information Sheet']
+    choices: ['INFORMATION SHEET']
 };
 
 timeline.push(welcome);
@@ -118,7 +118,7 @@ var declined_screen = {
     type: jsPsychHtmlButtonResponse,
     stimulus: '<h2>Thank you</h2>' +
               '<p>Thank you for your time. You may now close this window.</p>',
-    choices: ['Close'],
+    choices: ['CLOSE'],
     on_finish: function() {
         jsPsych.endExperiment();
     }
@@ -148,7 +148,7 @@ var transition_to_ravens = {
             <p>Please click the "Continue" button if you are ready to begin Part 1.</p>
         </div>
     `,
-    choices: ['Continue'],
+    choices: ['CONTINUE'],
 };
 timeline.push(transition_to_ravens);
     
@@ -290,7 +290,7 @@ var transition_to_bnfc = {
                Please tell us what you honestly think.</p>
         </div>
     `,
-    choices: ['Continue'],
+    choices: ['CONTINUE'],
 };
     
 var bNFC = {
@@ -325,7 +325,7 @@ var transition_to_demographics = {
             This information is used to provide a snapshot of the people who participated in this study.</p>
         </div>
     `,
-    choices: ['Continue'],
+    choices: ['CONTINUE'],
 };
     
 var demographics = {
@@ -373,7 +373,7 @@ var demographics = {
             <label><input type="radio" name="device" value="Other"> Other</label>
         </div>
     `,
-    button_label: 'Next'
+    button_label: 'NEXT'
 };
 
 var debrief = {
@@ -399,9 +399,11 @@ var debrief = {
             <p>Finally, we would like to thank you for participating in this research. The time and effort you have given to this project are sincerely appreciated.</p>
 
             <p><em>Lucy, Jay, and Erik</em></p>
+
+            <p><b>PLEASE CLICK THE "FINISH" BUTTON TO SUBMIT YOUR RESPONSES</b></P>
         </div>
     `,
-    choices: ['Finish'],
+    choices: ['FINISH'],
     button_html: '<button class="jspsych-btn" style="font-size: 16px; padding: 10px 30px; margin-top: 20px;">%choice%</button>'
 };
     
@@ -436,7 +438,7 @@ var debrief = {
             <p>Please click "Continue" read the instructions for the next task.</p>
         </div>
     `,
-    choices: ['Continue'],
+    choices: ['CONTINUE'],
 };
 timeline.push(transition_to_snowy);
     
