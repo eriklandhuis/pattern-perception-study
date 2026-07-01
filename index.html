@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Pattern Perception Study</title>
+<script src="jatos.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jspsych@7.3.4/dist/index.browser.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@jspsych/plugin-html-button-response@1.1.3/dist/index.browser.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@jspsych/plugin-survey-text@1.1.3/dist/index.browser.js"></script>
@@ -57,12 +58,16 @@
 // INITIALISE JSPSYCH
 // -------------------------------------------------------
 
-var jsPsych = jsPsychModule.initJsPsych({
-    on_finish: function() {
-        // Data will be sent to JATOS - for now just show it
-        jsPsych.data.displayData();
-    }
-});
+var jsPsych;
+
+jatos.onLoad(function() {
+
+    jsPsych = jsPsychModule.initJsPsych({
+        on_finish: function() {
+            var resultData = jsPsych.data.get().json();
+            jatos.submitResultData(resultData, jatos.startNextComponent);
+        }
+    });
 
 // -------------------------------------------------------
 // BUILD THE TIMELINE
@@ -77,9 +82,10 @@ var timeline = [];
 var welcome = {
     type: jsPsychHtmlButtonResponse,
     stimulus: '<h2>Welcome to the Pattern Perception Study</h2>' +
-              '<p>Thank you for taking the time to participate in this study.</p>' +
-              '<p>Please click the button below to begin.</p>',
-    choices: ['Begin']
+              '<p>Thank you for taking the time to consider participating in this study.</p>' +
+              '<p>Participation will take approximately 10-15 minutes of your time.</p>' +
+              '<p>Please click the button below to read the participation Information Sheet.</p>',
+    choices: ['INFORMATION SHEET']
 };
 
 timeline.push(welcome);
@@ -91,17 +97,17 @@ timeline.push(welcome);
 // -------------------------------------------------------
 var information_sheet = {
     type: jsPsychHtmlButtonResponse,
-    stimulus: '<h2>Study Information</h2>' +
+    stimulus: '<h2>Participant Information Sheet</h2>' +
               '<p><strong>[PLACEHOLDER: Study title and institution]</strong></p>' +
               '<p>[PLACEHOLDER: Brief description of the study purpose and what participation involves.]</p>' +
               '<p>[PLACEHOLDER: Information about data storage, anonymity, and confidentiality.]</p>' +
               '<p>[PLACEHOLDER: Information about voluntary participation and the right to withdraw.]</p>' +
               '<p>[PLACEHOLDER: Contact details for the research team.]</p>' +
               '<hr>' +
-              '<p><strong>I have understood what participation in this study involves…</strong></p>',
+              '<p><strong>I am 16 years or older.<br>I have understood what participation in this study involves.<br> I agree to participate in this study.</strong></p>',
     choices: [
-        '…and I agree to participate in this study.',
-        '…but have decided I would rather not participate in this study.'
+        '<b>YES</b>',
+        '<b>NO</b>'
     ],
     data: { trial_type: 'information_sheet' }
 };
@@ -112,7 +118,7 @@ var declined_screen = {
     type: jsPsychHtmlButtonResponse,
     stimulus: '<h2>Thank you</h2>' +
               '<p>Thank you for your time. You may now close this window.</p>',
-    choices: ['Close'],
+    choices: ['CLOSE'],
     on_finish: function() {
         jsPsych.endExperiment();
     }
@@ -130,19 +136,19 @@ timeline.push(if_declined);
 var transition_to_ravens = {
     type: jsPsychHtmlButtonResponse,
     stimulus: `
-        <div style="max-width: 700px; margin: auto; font-size: 1.2em; line-height: 1.8;">
-            <h2>Part 1: Pattern Identification Task</h2>
-            <p>There are three parts to this study.</p>
-            <p>In this first part, you will be asked to solve a series of 10 pattern identification problems.</p>
-            <p>In the trials that follow, you will be presented with a series of nine squares. Eight of those nine squares will contain some information, but the last (bottom right) square will contain a question mark.<br>
-               Below the main image you will see four more squares<br>
-               labelled A, B, C, & D.</p>
-            <p>Based on the information in the first 8 squares, you will be asked to select the option that you think belongs in the last (bottom right) square.</p>
-            <p>To help explain how to proceed, we would like to walk you through a practice trial.</p>
-            <p>Please click the "Continue" button if you are ready to begin the practice trial.</p>
+        <div style="max-width: 800px; margin: 0 auto; text-align: left; line-height: 1.6;">
+            <h2>Study Overview</h2>
+            <p>There are four parts to this study.<br>
+            <ul>
+               <li><b>Pattern identification</b> - 10 trials that will take about 3-7 minutes to complete.</li>
+               <li><b>Image recognition</b> - 10 trials that will take about 3-7 minutes to complete.</li>
+               <li><b>Brief questionnaire</b> - 15 questions that will take about 2-3 minutes to complete.</li>
+               <li><b>Demographics</b> - 4 basic questions asking a little bit about you.</li>
+            </ul>
+            <p>Please click the "Continue" button if you are ready to begin Part 1.</p>
         </div>
     `,
-    choices: ['Continue'],
+    choices: ['CONTINUE'],
 };
 timeline.push(transition_to_ravens);
     
@@ -161,22 +167,27 @@ var rpm_practice = {
     type: jsPsychHtmlButtonResponse,
     stimulus: `
         <div style="max-width: 800px; margin: 0 auto; text-align: left; line-height: 1.6;">
-            <h2>Practice trial</h2>
-            <p>In the image below you see three shapes; a circle, a 5-sided pentagon, and 4-sided diamond.<br>
-               The colour of the shapes vary:<br>
+            <h2>Part 1: Pattern Identification</h2>
+            <p>In this first part, you will be asked to solve 10 pattern identification problems.<br>
+            <p>Before you start, let's explain the task with an example.</p>
+            <p>In the image at the bottom of this page you see three shapes: circles, pentagons, and diamonds.<br>
+               Also, the colour of the shapes vary: red, green, or blue.</p>
+               So...<br>
             <ul>
-               <li>In the top row you see a red pentagon, a green circle, and a blue diamond.</li>
-               <li>In the middle row you see a blue circle, a red diamond, and a green pentagon.</li>
-               <li>And in the bottom row there is a green diamond, a blue pentagon, and a question mark.</li>
+               <li>Top row - a red pentagon, a green circle, a blue diamond.</li>
+               <li>Middle row - a blue circle, a red diamond, a green pentagon.</li>
+               <li>Bottom row - a green diamond, a blue pentagon, and a question mark.</li>
             </ul>
-            <p>So, the pattern is that each row and each column (that is, from top to bottom), should include one diamond, one circle, and one pentagon.<br>
-               And each row and each column should also include one of the three colours (i.e., red, green & blue).</p>
-            <p>From this we can work out that the missing symbol in the last square with the question mark should be the red circle, because 'red' and 'circle' are missing from row 3 and column 3.<br>
-               Therefore option B is the correct response.</p> 
-            <em>(Note that this is a relatively easy one — the ones that follow will be more difficult).</em></p>
-            <p><strong>Please click any one of the four buttons labelled A, B, C or D to continue</strong></p>
+            <p>The pattern appears to be: each row (and each column) includes <b>one</b> of each shape (i.e., 1 diamond, 1 circle, & 1 pentagon).<br>
+               And each row (and each column) includes <b>one</b> of the three colours (i.e., red, green, & blue).</p>
+            <p>As you can see, 'red' and 'circle' are missing from row 3 and column 3.<br>From this we can work out that the missing symbol in the last square with the question mark should be the red circle.<br>
+               Therefore, option B is the correct response.</p> 
+            <em>Note that this is a relatively easy one — the ones that follow will be more difficult.<br>
+                But the general idea is the same.</em></p>
+            <p><strong>Please click any one of the four buttons below the image (labelled A, B, C, or D) to continue.</strong></p>
             <div style="text-align: center;">
-                <img src="images/ravens/rpm_practice_trial.png" style="max-width: 60%; margin: 20px 0;">
+                <img src="images/ravens/rpm_practice_trial.png"
+                     style="max-width: 60%; margin: 20px 0; border: 2px solid black;">
             </div>
         </div>
     `,
@@ -212,10 +223,11 @@ for (var i = 1; i <= 10; i++) {
         type: jsPsychHtmlButtonResponse,
         stimulus: `
             <div style="max-width: 800px; margin: 0 auto; text-align: left; line-height: 1.6;">
-                <p>Which of the four squares labelled A, B, C, or D do you think belongs in the square with the question mark?</p>
-                <p>Please click one of the 4 buttons labelled A, B, C, & D for your answer</p>
+                <p>Which of the four squares labelled A, B, C, or D<br>
+                   do you think belongs in the square with the question mark?</p>
+                <p>Please click one of the 4 buttons below the image (labelled A, B, C, & D) for your answer.</p>
                 <div style="text-align: center;">
-                    <img src="${rpm_img}" style="max-width: 60%; margin: 20px 0;">
+                    <img src="${rpm_img}" style="max-width: 60%; margin: 20px 0; border: 2px solid black;">
                 </div>
             </div>
         `,
@@ -265,19 +277,20 @@ var feedback_icon = '';
 var transition_to_bnfc = {
     type: jsPsychHtmlButtonResponse,
     stimulus: `
-        <div style="max-width: 700px; margin: auto; font-size: 1.2em; line-height: 1.8;">
+        <div style="max-width: 800px; margin: 0 auto; text-align: left; line-height: 1.6;">
+            <p>Excellent, you've completed the image recognition task.<br>
+               Let's move on to part 3 of the study.<br>
+               This part should only take a couple of minutes, so you've nearly finished.</p>
             <h2>Part 3: Short Questionnaire</h2>
-            <p>Congatulations, you've completed the degraded image recognition task.<br>
-               We will now move on to the last part of the study.<br>
-               On the next page you will see a series of 15 short statements.<br>
+            <p>On the next page you will see a series of 15 short statements.<br>
                Please tell us how much you disagree or agree with each statement<br>
-               with "<b>Completely disagree</b>" on the far left-hand-side<br>
-               and "<b>Completely agree</b>" on the far right-hand-side</p>
+               from "<b>Completely disagree</b>" on the far left-hand-side<br>
+               to "<b>Completely agree</b>" on the far right-hand-side</p>
             <p>There are no 'right' or 'wrong' answers.<br>
                Please tell us what you honestly think.</p>
         </div>
     `,
-    choices: ['Continue'],
+    choices: ['CONTINUE'],
 };
     
 var bNFC = {
@@ -306,12 +319,13 @@ var bNFC = {
 var transition_to_demographics = {
     type: jsPsychHtmlButtonResponse,
     stimulus: `
-        <div style="max-width: 700px; margin: auto; font-size: 1.2em; line-height: 1.8;">
+        <div style="max-width: 800px; margin: 0 auto; text-align: left; line-height: 1.6;">
             <h2>Part 4: About You</h2>
-            <p>[Placeholder text — introduce the demographics section. E.g., "Almost done! We just have a few questions about you. This information helps us understand our sample."]</p>
+            <p>Almost done!<br>To finish, we just want to know a little bit about you.<br>
+            This information is used to provide a snapshot of the people who participated in this study.</p>
         </div>
     `,
-    choices: ['Continue'],
+    choices: ['CONTINUE'],
 };
     
 var demographics = {
@@ -359,7 +373,7 @@ var demographics = {
             <label><input type="radio" name="device" value="Other"> Other</label>
         </div>
     `,
-    button_label: 'Next'
+    button_label: 'NEXT'
 };
 
 var debrief = {
@@ -385,9 +399,11 @@ var debrief = {
             <p>Finally, we would like to thank you for participating in this research. The time and effort you have given to this project are sincerely appreciated.</p>
 
             <p><em>Lucy, Jay, and Erik</em></p>
+
+            <p><b>PLEASE CLICK THE "FINISH" BUTTON TO SUBMIT YOUR RESPONSES</b></P>
         </div>
     `,
-    choices: ['Finish'],
+    choices: ['FINISH'],
     button_html: '<button class="jspsych-btn" style="font-size: 16px; padding: 10px 30px; margin-top: 20px;">%choice%</button>'
 };
     
@@ -397,13 +413,13 @@ var debrief = {
         var baseURL = 'https://eriklandhuis.github.io/pattern-perception-study/images';
         var rpmURL = 'https://eriklandhuis.github.io/pattern-perception-study/images/rpm';
 
-        // Build all 20 trials (10 hit, 10 fa)
-        var allTrials = [];
-        for (var i = 1; i <= 10; i++) {
-            var setNum = (i < 10) ? "0" + i : "" + i;
-            allTrials.push({ condition: "hit", set: setNum });
-            allTrials.push({ condition: "fa",  set: setNum });
-        }
+    // Build all 10 trials (5 hit, 5 fa)
+    var allTrials = [];
+    for (var i = 1; i <= 5; i++) {
+        var setNum = "0" + i;
+        allTrials.push({ condition: "hit", set: setNum });
+        allTrials.push({ condition: "fa",  set: setNum });
+    }
 
         // Shuffle trial order (randomised per participant, no replacement)
         var shuffledTrials = jsPsych.randomization.shuffle(allTrials);
@@ -414,31 +430,38 @@ var debrief = {
     var transition_to_snowy = {
     type: jsPsychHtmlButtonResponse,
     stimulus: `
-        <div style="max-width: 700px; margin: auto; font-size: 1.2em; line-height: 1.8;">
+        <div style="max-width: 800px; margin: 0 auto; text-align: left; line-height: 1.6;">
+            <p>Great, you have now completed part 1 of this study.</p>
+            <p>Let's move on to part 2.</p>
             <h2>Part 2: Image Recognition</h2>
-            <p>[Placeholder text — introduce the Snowy Pictures task. E.g., "In this next part, you will be shown a series of images that start out blurry. Your task is to identify what is in the image as it becomes clearer."]</p>
+            <p>In this next part, your task is to see if you can identify anything in the pixilated images.</p>
+            <p>Please click "Continue" read the instructions for the next task.</p>
         </div>
     `,
-    choices: ['Continue'],
+    choices: ['CONTINUE'],
 };
 timeline.push(transition_to_snowy);
     
 var snowy_instructions = {
     type: jsPsychHtmlButtonResponse,
-    stimulus: '<h2>Degraded Image Recognition Task</h2>' +
-              '<p>In this part of the study, you will be shown a series of degraded (unclear) images.</p>' +
-              '<p>Each image will initially be highly degraded, and you may not be able to identify anything meaningful. Below each image, you will see two buttons:</p>' +
-              '<ul style="text-align:left;">' +
-              '<li><b>"I can\'t see anything, Please show me the next image"</b> – select this if you cannot identify what the image shows.</li>' +
-              '<li><b>"I think I can identify the image"</b> – select this as soon as you think you can identify what is shown in the image.</li>' +
-              '</ul>' +
-              '<p>If you select <b>"I can\'t see anything"</b>, a slightly less degraded version of the same image will be shown. If you still cannot identify anything meaningful, select <b>"I can\'t see anything"</b> again. With each click, the image will become progressively clearer.</p>' +
-              '<p>As soon as you think you know what the image shows, select <b>"I think I can identify the image"</b>. A text box will then appear with the instruction:</p>' +
-              '<p><i>"Please type what you think you saw in the box below."</i></p>' +
-              '<p>Type your answer into the text box.</p>' +
-              '<p>Your goal is to identify the hidden image using as few <b>"I can\'t see anything"</b> responses as possible.</p>' +
-              '<p>If you have not identified the image after 10 selections of <b>"I can\'t see anything"</b>, the text box will automatically appear. At this point, please type your best guess about what the image might show.</p>' +
-              '<p>There are 20 image sets in total.</p>',
+    stimulus: `
+        <div style="max-width: 700px; margin: auto; text-align: left;">
+            <h2>Image Identification Task</h2>
+            <p>In this part of the study, you will be shown a series of pixilated images.</p>
+            <p>The first image in each set will be very pixilated, and it is unlikely that you will see anything meaningful. Below that image, you will see two buttons:</p>
+            <ul>
+                <li><i>"I can't see anything. Please show me the next image"</i></li>
+                <li><i>"I think I can identify the image"</i></li>
+            </ul>
+            <p>If you select <i>"I can't see anything"</i>, a slightly less pixilated version of the same image will be shown.<br>If, after clicking that, you still cannot see anything meaningful, select <i>"I can't see anything"</i> again.<br>With each click, the image will become a little bit clearer (less pixilated).</p>
+            <p>As soon as you think you know what the image shows, select <i>"I think I can identify the image"</i>. A text box will then appear with the instruction:</p>
+            <p><i>"Please type what you think you saw in the box below."</i></p>
+            <p>Type your answer into the text box.</p>
+            <p>Your goal is to identify the hidden image using <b><u>the least number of <i>"I can't see anything"</i> responses</u></b>.</p>
+            <p>If you have not identified the image after clicking <i>"I can't see anything"</i> 10 times, a text box will automatically appear. At this point, please type your best guess about what the image might show.</p>
+            <p>There will be 10 trials in this part.</p>
+        </div>
+    `,
     choices: ['Start Image Task']
 };
 timeline.push(snowy_instructions);
@@ -455,7 +478,7 @@ timeline.push(snowy_instructions);
 
                 var snowy_trial = {
                     type: jsPsychHtmlButtonResponse,
-                    stimulus: '<p id="trial-instruction" style="font-size:16px;">Please look carefully at the image below. Select the option that best describes what you see.</p>' +
+                    stimulus: '<p id="trial-instruction" style="font-size:16px;">Please look carefully at the image below.<br>Select the option that best describes what you see.</p>' +
                               '<img id="trial-image" class="trial-image" src="' + baseURL + '/' + trialInfo.condition + '/' + trialInfo.condition + '_st' + trialInfo.set + '_lvl10.png" />' +
                               '<p id="level-counter" class="level-counter">Image 1 of 10</p>',
                     choices: ["I can't see anything. Please show me the next image.", "I think I know what is shown in the image."],
@@ -550,7 +573,10 @@ if (currentLevel < 1) {
         // -------------------------------------------------------
         // RUN THE STUDY
         // -------------------------------------------------------
-        jsPsych.run(timeline);
-       
+    jsPsych.run(timeline);
+
+}); // closes jatos.onLoad
+ 
 </script>
 </html> 
+
