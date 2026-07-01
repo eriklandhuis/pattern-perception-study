@@ -178,8 +178,8 @@ var rpm_practice = {
                <li>Middle row - a blue circle, a red diamond, a green pentagon.</li>
                <li>Bottom row - a green diamond, a blue pentagon, and a question mark.</li>
             </ul>
-            <p>The pattern is: each row (and each column) includes <b>one</b> of each shape (i.e., 1 diamond, 1 circle & 1 pentagon).<br>
-               And each row (and each column) includes <b>one</b> of the three colours (i.e., red, green & blue).</p>
+            <p>The pattern appears to be: each row (and each column) includes <b>one</b> of each shape (i.e., 1 diamond, 1 circle, & 1 pentagon).<br>
+               And each row (and each column) includes <b>one</b> of the three colours (i.e., red, green, & blue).</p>
             <p>As you can see, 'red' and 'circle' are missing from row 3 and column 3.<br>From this we can work out that the missing symbol in the last square with the question mark should be the red circle.<br>
                Therefore, option B is the correct response.</p> 
             <em>Note that this is a relatively easy one — the ones that follow will be more difficult.<br>
@@ -278,15 +278,14 @@ var transition_to_bnfc = {
     type: jsPsychHtmlButtonResponse,
     stimulus: `
         <div style="max-width: 800px; margin: 0 auto; text-align: left; line-height: 1.6;">
-            <h2>Part 3: Short Questionnaire</h2>
-            <p>Great, you've completed the image recognition task.<br>
-               Let's move on to the second-the-last last part of the study.<br>
+            <p>Excellent, you've completed the image recognition task.<br>
+               Let's move on to part 3 of the study.<br>
                This part should only take a couple of minutes, so you've nearly finished.</p>
             <h2>Part 3: Short Questionnaire</h2>
             <p>On the next page you will see a series of 15 short statements.<br>
                Please tell us how much you disagree or agree with each statement<br>
-               with "<b>Completely disagree</b>" on the far left-hand-side<br>
-               and "<b>Completely agree</b>" on the far right-hand-side</p>
+               from "<b>Completely disagree</b>" on the far left-hand-side<br>
+               to "<b>Completely agree</b>" on the far right-hand-side</p>
             <p>There are no 'right' or 'wrong' answers.<br>
                Please tell us what you honestly think.</p>
         </div>
@@ -322,8 +321,8 @@ var transition_to_demographics = {
     stimulus: `
         <div style="max-width: 800px; margin: 0 auto; text-align: left; line-height: 1.6;">
             <h2>Part 4: About You</h2>
-            <p>Almost done! We just have a few questions about you.<br>
-            This information is used to provide a summary of the people who participated in this study.</p>
+            <p>Almost done!<br>To finish, we just want to know a little bit about you.<br>
+            This information is used to provide a snapshot of the people who participated in this study.</p>
         </div>
     `,
     choices: ['Continue'],
@@ -431,10 +430,10 @@ var debrief = {
     stimulus: `
         <div style="max-width: 800px; margin: 0 auto; text-align: left; line-height: 1.6;">
             <p>Great, you have now completed part 1 of this study.</p>
-            <p>Let's move on to part 2</p>
+            <p>Let's move on to part 2.</p>
             <h2>Part 2: Image Recognition</h2>
-            <p>In this next part, your task is to see if identify anything in the pixilated images.</p>
-            <p>Please click "Continue" to begin this next task.</p>
+            <p>In this next part, your task is to see if you can identify anything in the pixilated images.</p>
+            <p>Please click "Continue" read the instructions for the next task.</p>
         </div>
     `,
     choices: ['Continue'],
@@ -447,18 +446,18 @@ var snowy_instructions = {
         <div style="max-width: 700px; margin: auto; text-align: left;">
             <h2>Image Identification Task</h2>
             <p>In this part of the study, you will be shown a series of pixilated images.</p>
-            <p>Each image will initially be very pixilated, and it is unlikly that you will see anything meaningful. Below each image, you will see two buttons:</p>
+            <p>The first image in each set will be very pixilated, and it is unlikely that you will see anything meaningful. Below that image, you will see two buttons:</p>
             <ul>
                 <li><i>"I can't see anything. Please show me the next image"</i></li>
                 <li><i>"I think I can identify the image"</i></li>
             </ul>
-            <p>If you select <i>"I can't see anything"</i>, a slightly less pixilated version of the same image will be shown.<br>If, after clicking that, you still cannot see anything meaningful, select <i>"I can't see anything"</i> again.<br>With each click, the image will become progressively clearer.</p>
+            <p>If you select <i>"I can't see anything"</i>, a slightly less pixilated version of the same image will be shown.<br>If, after clicking that, you still cannot see anything meaningful, select <i>"I can't see anything"</i> again.<br>With each click, the image will become a little bit clearer (less pixilated).</p>
             <p>As soon as you think you know what the image shows, select <i>"I think I can identify the image"</i>. A text box will then appear with the instruction:</p>
             <p><i>"Please type what you think you saw in the box below."</i></p>
             <p>Type your answer into the text box.</p>
-            <p><b>Your goal is to identify the hidden image using <u>as few <i>"I can't see anything"</i> responses</u> as possible.</b></p>
-            <p>If you have not identified the image after 10 selections of <b>"I can't see anything"</b>, the text box will automatically appear. At this point, please type your best guess about what the image might show.</p>
-            <p>There are 10 image sets in total.</p>
+            <p>Your goal is to identify the hidden image using <b><u>the least number of <i>"I can't see anything"</i> responses</u></b>.</p>
+            <p>If you have not identified the image after clicking <i>"I can't see anything"</i> 10 times, a text box will automatically appear. At this point, please type your best guess about what the image might show.</p>
+            <p>There will be 10 trials in this part.</p>
         </div>
     `,
     choices: ['Start Image Task']
