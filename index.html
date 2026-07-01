@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Pattern Perception Study</title>
+<script src="jatos.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jspsych@7.3.4/dist/index.browser.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@jspsych/plugin-html-button-response@1.1.3/dist/index.browser.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@jspsych/plugin-survey-text@1.1.3/dist/index.browser.js"></script>
@@ -57,12 +58,16 @@
 // INITIALISE JSPSYCH
 // -------------------------------------------------------
 
-var jsPsych = jsPsychModule.initJsPsych({
-    on_finish: function() {
-        // Data will be sent to JATOS - for now just show it
-        jsPsych.data.displayData();
-    }
-});
+var jsPsych;
+
+jatos.onLoad(function() {
+
+    jsPsych = jsPsychModule.initJsPsych({
+        on_finish: function() {
+            var resultData = jsPsych.data.get().json();
+            jatos.submitResultData(resultData, jatos.startNextComponent);
+        }
+    });
 
 // -------------------------------------------------------
 // BUILD THE TIMELINE
@@ -567,7 +572,10 @@ if (currentLevel < 1) {
         // -------------------------------------------------------
         // RUN THE STUDY
         // -------------------------------------------------------
-        jsPsych.run(timeline);
-       
+    jsPsych.run(timeline);
+
+}); // closes jatos.onLoad
+ 
 </script>
 </html> 
+
