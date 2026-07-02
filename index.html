@@ -97,14 +97,91 @@ timeline.push(welcome);
 // -------------------------------------------------------
 var information_sheet = {
     type: jsPsychHtmlButtonResponse,
-    stimulus: '<h2>Participant Information Sheet</h2>' +
-              '<p><strong>[PLACEHOLDER: Study title and institution]</strong></p>' +
-              '<p>[PLACEHOLDER: Brief description of the study purpose and what participation involves.]</p>' +
-              '<p>[PLACEHOLDER: Information about data storage, anonymity, and confidentiality.]</p>' +
-              '<p>[PLACEHOLDER: Information about voluntary participation and the right to withdraw.]</p>' +
-              '<p>[PLACEHOLDER: Contact details for the research team.]</p>' +
-              '<hr>' +
-              '<p><strong>I am 16 years or older.<br>I have understood what participation in this study involves.<br> I agree to participate in this study.</strong></p>',
+stimulus: `
+  <div style="max-width: 800px; margin: 0 auto; text-align: left; font-size: 15px; line-height: 1.6;">
+
+    <div style="margin-bottom: 20px;">
+      <img src="images/AUT_logo.png" alt="AUT Logo" style="height: 80px;">
+    </div>
+
+    <h2 style="text-align: left;">Participant Information Sheet</h2>
+    <p><em>Date that data collection will start: 3 July, 2026</em></p>
+
+    <h3 style="text-align: left;">Project Title</h3>
+    <p><strong>Making Sense of the Noise: Individual Differences in Visual Pattern Perception</strong></p>
+
+    <p>Kia ora,</p>
+    <p>You are invited to participate in a research study exploring factors that influence human visual perception and pattern detection.</p>
+    <p>This study is being conducted by Lucy Daylight, a postgraduate student in the Department of Psychology at the Auckland University of Technology (AUT). This research is being carried out as a partial requirement for the Bachelor of Health Science (Honours) degree. The project is being supervised by Dr. Erik Landhuis and Dr. Jay Wood from the School of Social Sciences and Humanities.</p>
+
+    <h3 style="text-align: left;">What is the purpose of this research?</h3>
+    <p>When processing complex environments, our brains constantly look for structure and meaning in the things we see. The purpose of this study is to understand how individual differences and varying task experiences influence our ability to detect patterns in visual stimuli (images). By participating, you will help us to understand the psychological processes behind every-day human perception. The findings from this research may be published in academic journals and presented at professional conferences.</p>
+
+    <h3 style="text-align: left;">How was I identified and why am I being invited to participate in this research?</h3>
+    <p>You have expressed interest in taking part in this research by using the URL or QR code on advertisements posted on social media, or by being provided this link by someone you know. Participation in this study is open to anyone over the age of 16. We will not ask you to provide information about yourself that might identify you, thus participation is entirely anonymous (that is, we won't know who you are).</p>
+
+    <h3 style="text-align: left;">How do I agree to participate in this research?</h3>
+    <p>Your participation in this research is voluntary (it is your choice), and whether you choose to participate will neither advantage nor disadvantage you. Because this is an anonymous online study, you do not need to complete or sign a physical consent form; instead, your consent is assumed by your voluntary decision to proceed.</p>
+    <p>You are free to withdraw from the study at any time. To do this, simply close your browser window or the application (App) the survey is presented on. However, please note that because this is a fully anonymous study, it will not be possible to withdraw your information after you have submitted it, as we have no way of tracing which responses belong to you. Submission of responses in this study will be taken as final consent and agreement to participate.</p>
+
+    <h3 style="text-align: left;">What will my participation involve?</h3>
+    <p>If you agree to take part, you will be asked to complete a series of pattern detection tasks. That is, you will be shown images, and for each image you will be asked tell us what you think the pattern is, or if you can detect any hidden images. You will also be asked to complete a short 15-item questionnaire. Participation in this research should take no more than 10 to 15 minutes of your time.</p>
+
+    <h3 style="text-align: left;">What are the benefits?</h3>
+    <p>While there may be no direct personal benefit to you from participating, your contribution will help advance scientific knowledge regarding how people perceive patterns and interpret visual information. Additionally, completion of this study will contribute to the completion of my Bachelor of Health Sciences (Honours) degree in Psychology.</p>
+
+    <h3 style="text-align: left;">What are the costs?</h3>
+    <p>Participation in this study should take no more than 10–15 minutes of your time. Other than time, there are no further costs to participating in this study.</p>
+
+    <h3 style="text-align: left;">Will the results of the study be published?</h3>
+    <p>The results of this research will be published in an Honours dissertation. Results may be published in peer-reviewed academic journals. Results may also be presented during conferences or seminars to wider professional and academic communities. Any published results will include only summarised data, and it will not be possible for you to be identified in those results.</p>
+
+    <h3 style="text-align: left;">What are the discomforts and risks?</h3>
+    <p>There are no significant risks or discomforts associated with this study. The visual and cognitive tasks are standard psychological exercises. It is possible that some participants might feel a brief moment of mild frustration if they find the visual or problem-solving elements challenging.</p>
+
+    <h3 style="text-align: left;">How will these discomforts and risks be alleviated?</h3>
+    <p>It is unlikely that participation in this research will cause any serious risk or discomfort, other than the possibility that some participants might feel a brief moment of mild frustration if they find the visual or problem-solving elements challenging. However, you are free to withdraw from this study at any time. To do this, simply close your browser window or the application (App) the survey is presented on. If, after completing this study, you feel you need someone to talk to, you can contact:</p>
+    <ul>
+      <li><strong>Youthline:</strong> 0800 376 633 (text 234) – Support available 24/7</li>
+      <li><strong>Lifeline:</strong> 0800 543 354 – Support available 24/7</li>
+    </ul>
+
+    <h3 style="text-align: left;">What will happen to information about me?</h3>
+    <p>Participation in this study is anonymous, and we will not ask you to provide any information that could identify you. As this is an anonymous study it will not be possible to withdraw your information after you have submitted it. All data from your responses will be stored securely in AUT-approved OneDrive storage and will only be accessible to researchers assigned to the project. If the results from this study are published in a scientific journal, we may be required to upload the data to an open scientific repository. Note that we will not collect information about you that could identify you. Even we, as researchers, won't know who you are. We will not on-sell your responses to any third parties.</p>
+
+    <h3 style="text-align: left;">What opportunity do I have to consider this invitation?</h3>
+    <p>This study will be available until August 31, 2026.</p>
+
+    <h3 style="text-align: left;">Will I receive feedback on the results of this research?</h3>
+    <p>Upon completion of the study, you will have the opportunity to access a summary of the findings. To get a summary of the results from this research, please follow this link:<br>
+    <a href="https://aut.au1.qualtrics.com/jfe/form/SV_38GDIaTOEEkDX70" target="_blank">https://aut.au1.qualtrics.com/jfe/form/SV_38GDIaTOEEkDX70</a></p>
+    <p>A summary of the research findings will be uploaded upon completion of the study. We anticipate that a summary of the findings will be available in November of this year (2026).</p>
+    <p>Due to the anonymous nature of this study, we will not be able to give you feedback about your individual responses.</p>
+
+    <h3 style="text-align: left;">What do I do if I have concerns about this research?</h3>
+    <p>Any concerns regarding the nature of this project should be notified in the first instance to the Project Supervisor, Dr Erik Landhuis (Email: <a href="mailto:erik.landhuis@aut.ac.nz">erik.landhuis@aut.ac.nz</a>; telephone 09 921 9999 extension 6645).</p>
+    <p>Concerns regarding the conduct of the research should be notified to the Executive Secretary of AUTEC, <a href="mailto:ethics@aut.ac.nz">ethics@aut.ac.nz</a>, (+649) 921 9999 ext 6038.</p>
+
+    <h3 style="text-align: left;">Who do I contact for further information about this research?</h3>
+    <p>Please keep this Information Sheet for your future reference. You are also able to contact the research team as follows:</p>
+    <p><strong>Researcher Contact Details:</strong><br>
+    Lucy Daylight: <a href="mailto:drb5545@autuni.ac.nz">drb5545@autuni.ac.nz</a></p>
+    <p><strong>Project Supervisor Contact Details:</strong><br>
+    Dr Erik Landhuis: <a href="mailto:erik.landhuis@aut.ac.nz">erik.landhuis@aut.ac.nz</a>, +64 921 9999 extension 6645.<br>
+    Dr Jay Wood: <a href="mailto:jay.wood@aut.ac.nz">jay.wood@aut.ac.nz</a>, +64 9 921 9999 extension 8506.</p>
+
+    <p><em>Approved by the Auckland University of Technology Ethics Committee on 2 July, 2026, AUTEC Reference number 26/187.</em></p>
+
+    <hr style="margin: 30px 0;">
+    <p><strong>Download a PDF copy of this Information Sheet:</strong><br>
+    <a href="docs/Pattern_Perception_Info_Sheet_FINAL.pdf" target="_blank" 
+       style="display: inline-block; padding: 10px 20px; background-color: #2196F3; color: white; 
+              text-decoration: none; border-radius: 5px; margin-top: 5px;">
+      📄 Download Information Sheet (PDF)
+    </a></p>
+
+  </div>
+`,
     choices: [
         '<b>YES</b>',
         '<b>NO</b>'
